@@ -1,31 +1,39 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
 
-// Import Firebase modules
-import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
-import { provideAuth, getAuth } from '@angular/fire/auth';
-import { firebaseConfig } from './environments/firebase-config';
+import { AppComponent } from "./app.component";
+import { MapComponent as MapComponent } from "./pages/map/map.component";
+import { AppRoutingModule } from "./app-routing.module";
 
-import { routes } from './app.routes';
-import { FirebaseService } from './services/firebase.service';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
+
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { HomeComponent } from "./pages/home/home.component";
+import { environment } from "../environments/environment";
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    MapComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebase, 'AngularDemoFirebase'),
+    MatTabsModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatListModule,
+    FlexLayoutModule,
+    AngularFireModule.initializeApp(environment.firebase, 'AngularDemoArcGIS'),
     AngularFireDatabaseModule
   ],
-  providers: [
-    FirebaseService,
-    SuperheroFactoryService
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
-
+export class AppModule { }

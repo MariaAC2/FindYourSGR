@@ -7,7 +7,10 @@ export interface IDatabaseItem {
     val: string;
 }
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
+
 export class FirebaseService {
 
     listFeed: Observable<any[]>;
@@ -34,7 +37,7 @@ export class FirebaseService {
         this.db.list('list').remove();
     }
 
-    addListObject(val: string) {
+    addSimpleListObject(val: string) {
         let item: IDatabaseItem = {
             name: "test",
             val: val
@@ -48,5 +51,30 @@ export class FirebaseService {
             val: val
         };
         this.db.object('obj').set([item]);
+    }
+
+    updateUserPosition(position: { latitude: number; longitude: number }) {
+        // Actualizăm poziția centrală a utilizatorului în Firebase
+        this.db.object('userPosition').set(position);
+    }
+
+    getUserPosition() {
+        // Obținem poziția centrală a utilizatorului din Firebase
+        return this.db.object('userPosition').valueChanges();
+    }
+
+    addListObject(data: { latitude: number; longitude: number } | string) {
+        if (typeof data === 'string') {
+            // Adaugă string-ul într-o listă separată pentru string-uri
+            this.db.list('nameList').push(data);
+        } else {
+            // Adaugă obiectul locație în lista de puncte geografice
+            this.db.list('mapPoints').push(data);
+        }
+    }
+
+    getMapPoints() {
+        // Obținem lista de puncte din Firebase
+        return this.db.list('mapPoints').valueChanges();
     }
 }
