@@ -1,12 +1,41 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { NavigationEnd, Event, Router } from '@angular/router';
+
+interface ITab {
+  name: string;
+  link: string;
+}
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.scss']
 })
+
 export class AppComponent {
-  title = 'FindYourSGR';
+
+  tabs: ITab[] = [{
+    name: 'Home',
+    link: '/home'
+  }, {
+    name: 'Map',
+    link: '/map'
+  }];
+
+  activeTab = this.tabs[0].link;
+
+  constructor(private router: Router) {
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        this.activeTab = event.url;
+        console.log(event);
+      }
+    });
+  }
+
+  // See app.component.html
+  mapLoadedEvent(status: boolean) {
+    console.log('The map loaded: ' + status);
+  }
 }
+
