@@ -54,7 +54,7 @@ export class MapComponent implements OnInit, OnDestroy {
     trailheadsLayer: esri.FeatureLayer;
 
     zoom = 10;
-    center: Array<number> = [-118.73682450024377, 34.07817583063242];
+    center: Array<number> = [26.096306, 44.439663];
     basemap = "streets-vector";
     loaded = false;
     directionsElement: any;
@@ -79,12 +79,12 @@ export class MapComponent implements OnInit, OnDestroy {
             this.initializeMap().then(() => {
                 this.loaded = this.view.ready;
                 this.mapLoadedEvent.emit(true);
-                this.addSampleGraphics();
+                // this.addSampleGraphics();
 
-                this.connectFirebase();
-                this.displayFirebaseDataOnMap();
+                // this.connectFirebase();
+                // this.displayFirebaseDataOnMap();
 
-                this.startTrackingUserPosition();
+                // this.startTrackingUserPosition();
             });
         } catch (error) {
             console.error("Error loading the map: ", error);
@@ -201,7 +201,7 @@ export class MapComponent implements OnInit, OnDestroy {
             };
             this.map = new WebMap(mapProperties);
 
-            this.addFeatureLayers();
+            // this.addFeatureLayers();
             this.addGraphicsLayer();
 
             const mapViewProperties = {
