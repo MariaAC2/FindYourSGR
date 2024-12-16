@@ -1,7 +1,7 @@
 <div class="topnav">
     <a class="active" href="home">Acasă</a>
     <a href="map">Hartă</a>
-    <a href="add">Adaugă un punct</a>
+    <a (click)="openPopup()">Adaugă un punct</a>
     <a href="favorites">Favorite</a>
     <a href="history">Istoric</a>
     <a href="account">Contul meu</a>
@@ -11,4 +11,4 @@
     <router-outlet></router-outlet>
 </div>
 
-<button mat-raised-button color="accent" (click)="openPopup()">Adaugă un punct</button>
+<!-- <button mat-raised-button color="accent" (click)="openPopup()">Adaugă un punct</button> -->

@@ -30,6 +30,10 @@ export class AppComponent {
       if (event instanceof NavigationEnd) {
         this.activeTab = event.url;
         console.log(event);
+
+        if (this.activeTab === '/add') {
+            this.openPopup();
+        }
       }
     });
   }
