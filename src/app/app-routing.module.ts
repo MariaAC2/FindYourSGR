@@ -2,7 +2,7 @@ import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { MapComponent } from './pages/map/map.component';
 import { HomeComponent } from './pages/home/home.component';
-
+import { AddPoint1Component } from "./pages/add/add.component";
 
 export const routes: Routes = [
   {
@@ -12,6 +12,10 @@ export const routes: Routes = [
   {
     path: 'map',
     component: MapComponent,
+  },
+  {
+    path: 'add',
+    component: AddPoint1Component,
   },
   {
     path: '',

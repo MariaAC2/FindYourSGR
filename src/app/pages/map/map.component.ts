@@ -305,20 +305,25 @@ export class MapComponent implements OnInit, OnDestroy {
 
     addFeatureLayers() {
         this.trailheadsLayer = new FeatureLayer({
-            url: "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trailheads/FeatureServer/0",
+            url: "https://www.arcgis.com/apps/instant/basic/index.html?appid=cc0b63861c1f4badb599d718776d38e4",
             outFields: ['*']
         });
         this.map.add(this.trailheadsLayer);
+        // this.trailheadsLayer = new FeatureLayer({
+        //     url: "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trailheads/FeatureServer/0",
+        //     outFields: ['*']
+        // });
+        // this.map.add(this.trailheadsLayer);
 
-        const trailsLayer = new FeatureLayer({
-            url: "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trails/FeatureServer/0"
-        });
-        this.map.add(trailsLayer, 0);
+        // const trailsLayer = new FeatureLayer({
+        //     url: "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trails/FeatureServer/0"
+        // });
+        // this.map.add(trailsLayer, 0);
 
-        const parksLayer = new FeatureLayer({
-            url: "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Parks_and_Open_Space/FeatureServer/0"
-        });
-        this.map.add(parksLayer, 0);
+        // const parksLayer = new FeatureLayer({
+        //     url: "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Parks_and_Open_Space/FeatureServer/0"
+        // });
+        // this.map.add(parksLayer, 0);
 
         console.log("Feature layers added");
     }
