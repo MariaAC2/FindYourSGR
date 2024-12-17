@@ -45,8 +45,19 @@ export class AddPoint2Component implements OnInit{
     view: esri.MapView;
     basemap = "streets-vector";
     center: Array<number> = [26.096306, 44.439663];
+    inputValue: string = "";
+
+    constructor(private dialogRef: MatDialogRef<AddPoint2Component>) {}
 
     ngOnInit() {}
+
+    onSave(): void {
+        this.dialogRef.close(this.inputValue);
+    }
+
+    onClose(): void {
+      this.dialogRef.close();
+    }
 
     openPopup() {
         this.isPopupVisible = true;
