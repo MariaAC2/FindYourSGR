@@ -14,10 +14,9 @@
 }
 
 .map-view-popup {
-    flex: 1;
-    width: 200px;
-    height: 200px; /* Fill the available space */
-    border: 1px solid #ddd;
+    width: 300px;
+    height: 200px; /* Ensure the container has a height */
+    visibility: visible;
 }
   
 .full-width {
