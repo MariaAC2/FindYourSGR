@@ -1,4 +1,4 @@
-<div class="topnav">
+<!-- <div class="topnav">
     <a class="active" href="home">Acasă</a>
     <a href="map">Hartă</a>
     <a (click)="openPopup()">Adaugă un punct</a>
@@ -6,9 +6,16 @@
     <a href="history">Istoric</a>
     <a href="account">Contul meu</a>
   </div>
-  
+   -->
+
+<div class="topnav">
+    <a *ngFor="let tab of tabs" 
+        href="javascript:void(0);" (click)="onTabClick(tab)"> {{ tab.name }}
+    </a>
+</div>
+
 <div class="container">
     <router-outlet></router-outlet>
-</div>
+    </div>
 
 <!-- <button mat-raised-button color="accent" (click)="openPopup()">Adaugă un punct</button> -->

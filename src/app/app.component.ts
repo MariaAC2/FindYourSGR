@@ -17,10 +17,9 @@ interface ITab {
 export class AppComponent {
 
   tabs: ITab[] = [
-    { name: 'Home', link: '/home' },
-    { name: 'Map', link: '/map' },
-    { name: "AddPoint1", link: '/add_point1' },
-    { name: "AddPoint2", link: '/add_point2' }
+    { name: 'Acasă', link: '/home' },
+    { name: 'Hartă', link: '/map' },
+    { name: "Adaugă un punct", link: '/add_point1' }
   ];
 
   activeTab = this.tabs[0].link;
@@ -31,13 +30,20 @@ export class AppComponent {
       if (event instanceof NavigationEnd) {
         this.activeTab = event.url;
         console.log(event);
-
-        if (this.activeTab === '/add_point1') {
-            this.openPopup();
-        }
       }
     });
   }
+
+  onTabClick(tab: ITab): void {
+    this.activeTab = tab.link;
+  
+    if (tab.name === 'Adaugă un punct') {
+      this.openPopup(); // Open the dialog for AddPoint1
+    } else {
+      this.router.navigate([tab.link]); // Navigate to other pages
+    }
+  }
+  
 
   // Funcție pentru a afișa evenimentul mapLoaded
   mapLoadedEvent(status: boolean) {

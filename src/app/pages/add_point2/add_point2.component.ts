@@ -7,9 +7,9 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./add_point2.component.scss']
 })
 export class AddPoint2Component {
-    constructor(private dialogRef: MatDialogRef<AddPoint2Component>) {}
+    // constructor(private dialogRef: MatDialogRef<AddPoint2Component>) {}
 
-    onClose(): void {
-      this.dialogRef.close();
-    }
+    // onClose(): void {
+    //   this.dialogRef.close();
+    // }
 }
