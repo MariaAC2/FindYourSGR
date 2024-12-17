@@ -12,6 +12,13 @@
     border-radius: 8px;
     z-index: 1000;
 }
+
+.map-view-popup {
+    flex: 1;
+    width: 200px;
+    height: 200px; /* Fill the available space */
+    border: 1px solid #ddd;
+}
   
 .full-width {
     width: 100%;
@@ -30,7 +37,7 @@
     font-size: 20px;
 }
 
-.next-button {
+.save-button {
     margin-top: 16px;
 }
 

@@ -9,23 +9,16 @@ import { Router } from '@angular/router';
 })
 
 export class AddPoint1Component {
-  selectedService: string = '';
+  selectedService: string = ''; // Tipul de serviciu (Punct SGR sau Cos de gunoi)
 
-  constructor(
-    private dialogRef: MatDialogRef<AddPoint1Component>,
-    private router: Router
-    ) {}
+  constructor(private dialogRef: MatDialogRef<AddPoint1Component>) {}
 
   // Închide dialogul și trimite datele selectate
   onNext(): void {
-    this.dialogRef.close(this.selectedService);
-
-    setTimeout(() => {
-        this.router.navigate(['/add_point2']);
-      }, 0);
+    this.dialogRef.close('openNext');
   }
 
-  onCancel(): void {
+  onClose(): void {
     this.dialogRef.close();
   }
 }

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavigationEnd, Event, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AddPoint1Component } from "./pages/add_point1/add_point1.component";
+import { AddPoint2Component } from "./pages/add_point2/add_point2.component";
+
 
 interface ITab {
   name: string;
@@ -19,7 +21,10 @@ export class AppComponent {
   tabs: ITab[] = [
     { name: 'Acasă', link: '/home' },
     { name: 'Hartă', link: '/map' },
-    { name: "Adaugă un punct", link: '/add_point1' }
+    { name: "Adaugă un punct", link: '/add_point1' },
+    { name: "Favorite", link: '/favorites' },
+    { name: "Istoric căutări", link: '/history' },
+    { name: "Contul meu", link: '/account' }
   ];
 
   activeTab = this.tabs[0].link;
@@ -38,7 +43,7 @@ export class AppComponent {
     this.activeTab = tab.link;
   
     if (tab.name === 'Adaugă un punct') {
-      this.openPopup(); // Open the dialog for AddPoint1
+      this.openPopup(AddPoint1Component); // Open the dialog for AddPoint1
     } else {
       this.router.navigate([tab.link]); // Navigate to other pages
     }
@@ -50,18 +55,32 @@ export class AppComponent {
     console.log('The map loaded: ' + status);
   }
 
-  // Deschide pop-up-ul ServicePopupComponent
-  openPopup(): void {
-    const dialogRef = this.dialog.open(AddPoint1Component, {
-      width: '400px'
-    });
+//   openPopup(): void {
+//     const dialogRef = this.dialog.open(AddPoint1Component, {
+//       width: '400px'
+//     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log('Serviciu selectat:', result);
-      } else {
-        console.log('Dialogul a fost închis fără selecție.');
-      }
-    });
-  }
+//     dialogRef.afterClosed().subscribe(result => {
+//       if (result) {
+//         console.log('Serviciu selectat:', result);
+//       } else {
+//         console.log('Dialogul a fost închis fără selecție.');
+//       }
+//     });
+//   }
+    openPopup(component: any): void {
+        // const dialogRef = this.dialog.open(component, {
+        //     width: '400px',
+        //     disableClose: true, // Optional: Prevent closing on outside click
+        //     scrollStrategy: null // Disable scroll strategy (no locking)
+        // });
+
+        const dialogRef = this.dialog.open(component);
+
+        dialogRef.afterClosed().subscribe(result => {
+        if (result === 'openNext') {
+            this.openPopup(AddPoint2Component);
+        }
+        });
+    }
 }
