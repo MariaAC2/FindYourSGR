@@ -2,7 +2,9 @@ import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { MapComponent } from './pages/map/map.component';
 import { HomeComponent } from './pages/home/home.component';
-import { AddPoint1Component } from "./pages/add/add.component";
+import { AddPoint1Component } from "./pages/add_point1/add_point1.component";
+import { AddPoint2Component } from "./pages/add_point2/add_point2.component";
+
 
 export const routes: Routes = [
   {
@@ -14,8 +16,12 @@ export const routes: Routes = [
     component: MapComponent,
   },
   {
-    path: 'add',
+    path: 'add_point1',
     component: AddPoint1Component,
+  },
+  {
+    path: 'add_point2',
+    component: AddPoint2Component,
   },
   {
     path: '',

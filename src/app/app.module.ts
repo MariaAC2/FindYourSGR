@@ -3,7 +3,7 @@ import { NgModule } from "@angular/core";
 
 import { AppComponent } from "./app.component";
 import { MapComponent } from "./pages/map/map.component";
-import { AddPoint1Component } from "./pages/add/add.component";
+import { AddPoint1Component } from "./pages/add_point1/add_point1.component";
 import { AppRoutingModule } from "./app-routing.module";
 
 import { MatTabsModule } from '@angular/material/tabs';
@@ -23,13 +23,16 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AddPoint2Component } from './pages/add_point2/add_point2.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     MapComponent,
-    AddPoint1Component
+    AddPoint1Component,
+    AddPoint2Component
   ],
   imports: [
     BrowserModule,
@@ -44,6 +47,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatInputModule,     // Adăugat pentru mat-input
     MatIconModule,      // Adăugat pentru icoane
     MatDialogModule,    // Adăugat pentru dialoguri
+    FormsModule,
     FlexLayoutModule,
     AngularFireModule.initializeApp(environment.firebase, 'AngularDemoArcGIS'),
     AngularFireDatabaseModule

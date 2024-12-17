@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Event, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { AddPoint1Component } from "./pages/add/add.component";
+import { AddPoint1Component } from "./pages/add_point1/add_point1.component";
 
 interface ITab {
   name: string;
@@ -19,7 +19,8 @@ export class AppComponent {
   tabs: ITab[] = [
     { name: 'Home', link: '/home' },
     { name: 'Map', link: '/map' },
-    { name: "AddPoint1", link: '/add' }
+    { name: "AddPoint1", link: '/add_point1' },
+    { name: "AddPoint2", link: '/add_point2' }
   ];
 
   activeTab = this.tabs[0].link;
@@ -31,7 +32,7 @@ export class AppComponent {
         this.activeTab = event.url;
         console.log(event);
 
-        if (this.activeTab === '/add') {
+        if (this.activeTab === '/add_point1') {
             this.openPopup();
         }
       }
