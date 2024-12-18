@@ -19,29 +19,18 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-# Modelul Task (pentru TODO-uri)
-class Task(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.String(200), nullable=True)
-    completed = db.Column(db.Boolean, default=False)
-    
-    def as_dict(self):
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-
-
 class SGR_point(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(200), nullable=False)
     size_of_queue = db.Column(db.Integer, nullable=True, default=0)
     working = db.Column(db.Boolean, default=False)
+    coordinate_x = db.Columnn(db.Float, nullable=False)
+    coordinate_y = db.Columnn(db.Float, nullable=False)
     
     def as_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-def load_user(user_id):
-    return User.query.get(int(user_id))
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(70), nullable=False, unique=True)
@@ -64,9 +53,12 @@ class User(db.Model, UserMixin):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns if c.name != 'password_hash'}
     def __repr__(self):
         return f"User('{self.username}')"
-
+    
 with app.app_context():
     db.create_all()
+
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 def get_db_connection():
     conn = sqlite3.connect("instance/" + DATABASE)
@@ -109,163 +101,120 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-
-
 @app.route('/')
 def index(): 
     return "Lab6 Backend Server"
 
-# TODO 1: Endpoint pentru a adăuga un task nou (POST)
-@app.route('/tasks', methods=['POST'])
-def add_task():
-    """Adaugă un task nou în baza de date."""
-    # Logica pentru a adăuga un task nou va fi aici  
-    if 'title' not in request.json:
-        return jsonify({"status": False, "error": "Title is required"}), 400
+@app.route('/addSGRPoint', methods=['POST'])
+def add_SGR_point():
+    from flask import request, jsonify
 
-    req_title = request.json["title"]
-    existing_task = db.session.query(Task).filter(Task.title == request.json["title"]).first()
+    data = request.json
+    if not data:
+        return jsonify({"error": "Invalid or missing JSON payload"}), 400
 
-    if existing_task:
-        return jsonify({"status": False, "message": "A task with this title already exists."}), 400
-    
-    if 'description' in request.json:
-        req_description = request.json["description"]
-        existing_task = db.session.query(Task).filter(Task.description == request.json["description"]).first()
+    title = data.get('title')
+    description = data.get('description')
+    coordinate_x = data.get('coordinate_x')
+    coordinate_y = data.get('coordinate_y')
 
-        if existing_task:
-            return jsonify({"status": False, "message": "A task with this description already exists."}), 400
-    
-    task = Task(
-        title=req_title,
-        description=req_description if "description" in request.json else None
+    if not all([title, description, coordinate_x, coordinate_y]):
+        return jsonify({"error": "Missing required fields: title, description, coordinate_x, coordinate_y"}), 400
+
+    size_of_queue = data.get('size_of_queue', 0)
+    working = data.get('working', False)
+
+    new_point = SGR_point(
+        title=title,
+        description=description,
+        coordinate_x=coordinate_x,
+        coordinate_y=coordinate_y,
+        size_of_queue=size_of_queue,
+        working=working
     )
 
-    db.session.add(task)
-    db.session.commit()
-    return jsonify({"status": True})
+    try:
+        db.session.add(new_point)
+        db.session.commit()
+        return jsonify({
+            "message": "SGR_point added successfully",
+            "point": new_point.as_dict()
+        }), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": f"Failed to add SGR_point: {str(e)}"}), 500
 
-# TODO 2: Endpoint pentru a obține toate task-urile (GET)
-@app.route('/tasks', methods=['GET'])
-def get_all_tasks():
-    """Obține toate task-urile din baza de date."""
-    # Logica pentru a returna toate task-urile va fi aici
-    tasks = db.session.execute(select(Task.id, Task.title, Task.description, Task.completed)).all()
-    tasks_dict = [task._asdict() for task in tasks]
-    return jsonify({"status": True, "data": tasks_dict})
+@app.route('/modifySGRCoord', methods=['POST'])
+def set_SGR_point():
+    data = request.json
+    if not data:
+        return jsonify({"error": "Invalid or missing JSON payload"}), 400
 
-@app.route('/tasks/select', methods=['GET'])
-def get_all_tasks_select():
-    """Obține toate task-urile din baza de date. (folosing sintaxa nativă SQL)"""
-    with get_db_connection() as conn:
-        tasks = conn.execute("SELECT * FROM Task").fetchall()
-        tasks_list = [dict(task) for task in tasks]
-    return jsonify({"status": True, "data": tasks_list})
+    point_id = data.get('id')
+    new_x = data.get('x')
+    new_y = data.get('y')
 
-# TODO 3: Endpoint pentru a obține un task după id (GET)
-@app.route('/tasks/<int:task_id>', methods=['GET'])
-def get_task(task_id):
-    """Obține un task pe baza ID-ului."""
-    # Logica pentru a obține un task după id va fi aici
-    task = db.session.execute(select(Task.id, Task.title, Task.description, Task.completed).where(Task.id==task_id)).one()._asdict()
-    return jsonify({"status": True, "data": task})
+    if point_id is None or new_x is None or new_y is None:
+        return jsonify({"error": "Missing required fields: id, x, and y"}), 400
 
-@app.route('/tasks/select/<int:task_id>', methods=['GET'])
-def get_task_select(task_id):
-    """Obține un task pe baza ID-ului."""
-    with get_db_connection() as conn:
-        task = conn.execute("SELECT * FROM Task WHERE id = ?", (task_id,)).fetchone()
-        if task:
-            return jsonify({"status": True, "data": dict(task)})
-        else:
-            return jsonify({"status": False, "error": "Task not found"}), 404
+    sgr_point = SGR_point.query.get(point_id)
+    if sgr_point is None:
+        return jsonify({"error": "SGR_point not found"}), 404
 
-# TODO 4: Endpoint pentru a actualiza un task (PUT)
-@app.route('/tasks/<int:task_id>', methods=['PUT'])
-def update_task(task_id):
-    """Actualizează un task existent."""
-    task = db.session.get(Task, task_id)
+    sgr_point.coordinate_x = new_x
+    sgr_point.coordinate_y = new_y
+
+    try:
+        db.session.commit()
+        return jsonify({"message": "SGR_point updated successfully", "point": sgr_point.as_dict()}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": f"Failed to update SGR_point: {str(e)}"}), 500
+
+@app.route('/incrementQueue', methods=['POST'])
+def increment_queue():
+    data = request.json
+    if not data:
+        return jsonify({"error": "Invalid or missing JSON payload"}), 400
+
+    point_id = data.get('id')
+
+    if point_id is None:
+        return jsonify({"error": "Missing required field: id"}), 400
+
+    sgr_point = SGR_point.query.get(point_id)
+    if sgr_point is None:
+        return jsonify({"error": "SGR_point not found"}), 404
+
+    try:
+        sgr_point.size_of_queue = (sgr_point.size_of_queue or 0) + 1
+        db.session.commit()
+        return jsonify({
+            "message": "Queue size incremented successfully",
+            "point": sgr_point.as_dict()
+        }), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": f"Failed to increment queue size: {str(e)}"}), 500
+
+@app.route('/findSGRPointByName', methods=['GET'])
+def find_SGR_point_by_name():
+    title = request.args.get('title')
     
-    if not task:
-        return jsonify({"status": False, "message": "Task not found"}), 404
+    if not title:
+        return jsonify({"error": "Missing required query parameter: title"}), 400
 
-    # Update the task's attributes
-    task.title = request.json["title"]
-    task.description = request.json["description"]
+    try:
+        sgr_points = SGR_point.query.filter_by(title=title).all()
+        if not sgr_points:
+            return jsonify({"error": "No SGR_point found with the given title"}), 404
 
-    # Commit the changes to the database
-    db.session.commit()
-    # Logica pentru a actualiza un task va fi aici
-    return jsonify({"status": True, "data": task.as_dict()})
-
-
-# TODO 5: Endpoint pentru a șterge un task (DELETE)
-@app.route('/tasks/<int:task_id>', methods=['DELETE'])
-def delete_task(task_id):
-    """Șterge un task pe baza ID-ului."""
-    task = db.session.get(Task, task_id)
-    if not task:
-        return jsonify({"status": False, "message": "Task not found"}), 404
-
-    db.session.delete(task)
-    db.session.commit()
-    # Logica pentru a șterge un task va fi aici
-    return jsonify({"status": True})
-
-# TODO 6: Endpoint pentru a marca un task ca finalizat (PATCH)
-@app.route('/tasks/<int:task_id>/complete', methods=['PATCH'])
-def complete_task(task_id):
-    """Marchează un task ca finalizat."""
-    task = db.session.get(Task, task_id)
-
-    if not task:
-        return jsonify({"status": False, "message": "Task not found"}), 404
-    
-    task.completed = True
-    db.session.commit()
-    # Logica pentru a marca un task ca finalizat va fi aici
-    return jsonify({"status": True, "data": task.as_dict()})
-
-# TODO 7: Validare date la crearea unui task nou
-# (de ex. câmpul title să fie obligatoriu) - implementare în cadrul funcției add_task()
-
-# TODO 8: Adăugare filtrare pentru task-uri finalizate vs nefinalizate (GET cu parametru)
-@app.route('/tasks/filter', methods=['GET'])
-def filter_tasks():
-    """Filtrare task-uri după status (completed sau nu)."""
-    tasks = db.session.query(Task).filter(Task.completed == request.args.get["completed"]).all()
-    tasks_dict = [task.as_dict() for task in tasks]
-    # Logica pentru a filtra task-urile va fi aici
-    return jsonify({"status": True, "data": tasks_dict})
-
-# TODO 9: Adăugare suport pentru paginare la obținerea task-urilor (GET cu paginare)
-@app.route('/tasks/paginate', methods=['GET'])
-def paginate_tasks():
-    """Paginare pentru obținerea task-urilor."""
-
-    # Obține parametrii de paginare din request, cu valori implicite
-    page = request.json['page']
-    per_page = request.json['per_page']
-    
-    tasks = db.session.query(Task).limit(per_page).offset((page - 1) * per_page).all()
-    
-    return jsonify({"status": True, "data": [task.as_dict() for task in tasks]})
-
-
-# TODO 10: Implementare căutare după titlul sau descrierea task-urilor (GET cu căutare)
-@app.route('/tasks/search', methods=['GET'])
-def search_tasks():
-    if 'title' in request.json:
-        req_title = request.json["title"]
-        task = db.session.execute(select(Task.id, Task.title, Task.description, Task.completed).where(Task.title==req_title)).one()._asdict()
-    elif 'description' in request.json:
-        req_description = request.json["description"]
-        task = db.session.execute(select(Task.id, Task.title, Task.description, Task.completed).where(Task.description==req_description)).one()._asdict()
-    
-    if not task:
-         return jsonify({"status": False, "message": "No task found."}), 400
-     
-    return jsonify({"status": True, "data": task})
+        return jsonify({
+            "message": f"{len(sgr_points)} SGR_point(s) found",
+            "points": [point.as_dict() for point in sgr_points]
+        }), 200
+    except Exception as e:
+        return jsonify({"error": f"Failed to find SGR_point by name: {str(e)}"}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
