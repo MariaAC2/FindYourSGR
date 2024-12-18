@@ -8,6 +8,8 @@
   </div>
    -->
 
+<div class="dark-overlay" *ngIf="isPopupOpen" (click)="closePopup()"></div>
+
 <div class="topnav">
     <a *ngFor="let tab of tabs" 
         href="javascript:void(0);" (click)="onTabClick(tab)"> {{ tab.name }}
@@ -16,6 +18,6 @@
 
 <div class="container">
     <router-outlet></router-outlet>
-    </div>
+</div>
 
 <!-- <button mat-raised-button color="accent" (click)="openPopup()">Adaugă un punct</button> -->

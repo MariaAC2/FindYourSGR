@@ -28,6 +28,7 @@ export class AppComponent {
   ];
 
   activeTab = this.tabs[0].link;
+  isPopupOpen = false;
 
   constructor(private router: Router, private dialog: MatDialog) {
     // Actualizează tab-ul activ la fiecare navigare
@@ -44,6 +45,8 @@ export class AppComponent {
   
     if (tab.name === 'Adaugă un punct') {
       this.openPopup(AddPoint1Component); // Open the dialog for AddPoint1
+    } else if (tab.name === "Contul meu") {
+        this.router.navigate(['/account']);
     } else {
       this.router.navigate([tab.link]); // Navigate to other pages
     }
@@ -55,26 +58,13 @@ export class AppComponent {
     console.log('The map loaded: ' + status);
   }
 
-//   openPopup(): void {
-//     const dialogRef = this.dialog.open(AddPoint1Component, {
-//       width: '400px'
-//     });
-
-//     dialogRef.afterClosed().subscribe(result => {
-//       if (result) {
-//         console.log('Serviciu selectat:', result);
-//       } else {
-//         console.log('Dialogul a fost închis fără selecție.');
-//       }
-//     });
-//   }
     openPopup(component: any): void {
         // const dialogRef = this.dialog.open(component, {
         //     width: '400px',
         //     disableClose: true, // Optional: Prevent closing on outside click
         //     scrollStrategy: null // Disable scroll strategy (no locking)
         // });
-
+        this.isPopupOpen = true;
         const dialogRef = this.dialog.open(component);
 
         dialogRef.afterClosed().subscribe(result => {
@@ -82,5 +72,9 @@ export class AppComponent {
             this.openPopup(AddPoint2Component);
         }
         });
+    }
+
+    closePopup(): void {
+        this.isPopupOpen = false;
     }
 }

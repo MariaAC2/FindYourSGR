@@ -25,6 +25,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddPoint2Component } from './pages/add_point2/add_point2.component';
 import { FormsModule } from '@angular/forms';
+import { AccountComponent } from './pages/account/account.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { FormsModule } from '@angular/forms';
     HomeComponent,
     MapComponent,
     AddPoint1Component,
-    AddPoint2Component
+    AddPoint2Component,
+    AccountComponent
   ],
   imports: [
     BrowserModule,

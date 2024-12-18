@@ -201,7 +201,7 @@ export class MapComponent implements OnInit, OnDestroy {
             };
             this.map = new WebMap(mapProperties);
 
-            // this.addFeatureLayers();
+            this.addFeatureLayers();
             this.addGraphicsLayer();
 
             const mapViewProperties = {
@@ -305,8 +305,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
     addFeatureLayers() {
         this.trailheadsLayer = new FeatureLayer({
-            url: "https://www.arcgis.com/apps/instant/basic/index.html?appid=cc0b63861c1f4badb599d718776d38e4",
-            outFields: ['*']
+            url: "https://services3.arcgis.com/RIKNx1AGgcT14u9Z/arcgis/rest/services/PuncteSGRLidl/FeatureServer/0",
         });
         this.map.add(this.trailheadsLayer);
         // this.trailheadsLayer = new FeatureLayer({
