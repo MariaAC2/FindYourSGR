@@ -1,8 +1,48 @@
-<div class="title">
-    <h1>
-        Welcome to
-        <a>
-            FindYourSGR
-        </a>
-    </h1>
+<div class="container" style="background-image: url('/assets/background.jpg'); 
+background-size: cover; 
+background-position: center; 
+background-repeat: no-repeat; 
+min-height: 100vh;">
+    <!-- Navbar -->
+    <mat-toolbar class="custom-toolbar">
+        <!-- Logo and Title -->
+        <span><img src="../../assets/recycling.png" alt="Logo" class="logo" /></span>
+        <span class="spacer-little"></span>
+        <span>FindYourSGR</span>
+        <!-- Spacer to push items to the right -->
+        <span class="spacer"></span>
+      
+        <!-- Menu Button with Navigation -->
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
+          <mat-icon>menu</mat-icon>
+        </button>
+      
+        <!-- Menu Content -->
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item [routerLink]="'/map'">
+            <span>Harta</span>
+          </button>
+          <button mat-menu-item [routerLink]="'/login'">
+            <span>Logare</span>
+          </button>
+          <button mat-menu-item [routerLink]="'/authenticate'">
+            <span>Autentificare</span>
+          </button>
+        </mat-menu>
+      </mat-toolbar>
+
+      <!-- Main Content -->
+      <div class="info-box">
+        <img src="../../assets/reuse.png" alt="Icon" class="info-box-icon" />
+        <h2>Găsește Punctele SGR din Apropierea Ta!</h2>
+        <p>
+          Descoperă rapid unde poți recicla sticle și ambalaje, direct de pe hartă!<br>
+          Adaugă locații noi, verifică distanțele și coada la punctele SGR din zona ta, scanează bonurile și ai șansa să câștigi premii atractive!<br>
+          Fii parte din schimbare și ajută la crearea unui mediu mai curat!
+        </p>
+        <button class="custom-button" [routerLink]="'/map'">Găsește-ți SGR-ul</button>
+        <button class="custom-button" [routerLink]="'/login'">Loghează-te</button>
+      </div>
+       
 </div>
+  

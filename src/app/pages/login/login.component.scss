@@ -1,0 +1,153 @@
+.login-container {
+    display: flex;
+    height: 100vh;
+}
+
+.left-column {
+  flex: 1;
+  background-color: rgba(57, 174, 112, 1);
+  background-position: center;
+  background-size: cover;
+  padding: 120px;
+  color: white;
+}
+
+.left-column h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.left-column p {
+  font-size: 1.5rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.login-right {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+/* Stiluri pentru titlu și subtitlu */
+.login-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.login-subtitle {
+  font-size: 1rem;
+  color: gray;
+  margin-bottom: 30px;
+}
+
+/* Stiluri pentru formular */
+.form-group {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 5px;
+}
+
+.form-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.mat-raised-button {
+  width: 100%;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+/* Stiluri pentru butonul activ */
+.mat-raised-button.active {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Stiluri pentru butonul estompat când formularul nu este completat corect */
+.mat-raised-button.inactive {
+  background-color: #007bff;
+  color: white;
+  opacity: 0.5; /* Buton mai estompat */
+  pointer-events: none; /* Impiedică clicul */
+}
+
+/* Stiluri pentru butoane de link */
+.mat-button {
+  width: 100%;
+}
+
+/* Stil pentru mesajul de înscriere */
+.signup-message {
+  font-size: 0.875rem;
+  margin-top: 15px;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.signup-message:hover {
+  text-decoration: underline;
+}
+
+/* Stilizare pentru checkbox-ul "Keep me logged in" */
+.mat-checkbox {
+  font-size: 1rem;
+  margin-top: 10px; 
+  display: flex;
+  align-items: center;
+}
+
+/* Crește dimensiunea și grosimea checkbox-ului */
+.mat-checkbox .mat-checkbox-inner-container {
+  width: 20px; 
+  height: 20px; 
+}
+
+/* Adaugă un border vizibil la checkbox */
+.mat-checkbox .mat-checkbox-frame {
+  border-color: #007bff; 
+  border-width: 2px; 
+}
+
+/* Culoare activă a checkbox-ului */
+.mat-checkbox-checked .mat-checkbox-inner-container {
+  background-color: #007bff; 
+}
+
+/* Textul checkbox-ului pentru a-l face mai vizibil */
+.mat-checkbox-label {
+  font-size: 1rem; 
+  color: #007bff; 
+  font-weight: bold; 
+  margin-left: 10px; 
+}
+
+/* Adaugă un efect de hover pentru checkbox */
+.mat-checkbox:hover {
+  background-color: rgba(0, 123, 255, 0.1); 
+  cursor: pointer;
+}
+
