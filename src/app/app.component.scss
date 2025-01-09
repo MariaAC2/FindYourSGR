@@ -17,9 +17,9 @@
     display: flex;
     justify-content: right;
     gap: 10px;
-    background-color: #f1f1f1; /* Optional: Add a background color for better visibility */
-    padding: 10px 0; /* Adds padding around the menu options */
-    border-bottom: 1px solid #ddd; /* Optional: Adds a subtle separator */
+    background-color: #f1f1f1;
+    padding: 4px 0;
+    border-bottom: 1px solid #ddd;
 }
   
 .topnav a {
@@ -33,15 +33,6 @@
   
 .topnav a:hover {
     background-color: #39AE70; /* Changes background color on hover */
-}
-
-.logo {
-    height: 35px; 
-    width: auto; 
-    max-height: 100%; 
-    display: flex; 
-    align-items: center; 
-    justify-content: left;
 }
   
 // .topnav a.active {

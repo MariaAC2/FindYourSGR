@@ -4,32 +4,23 @@ background-position: center;
 background-repeat: no-repeat; 
 min-height: 100vh;">
     <!-- Navbar -->
-    <mat-toolbar class="custom-toolbar">
+    <div class="topnav">
         <!-- Logo and Title -->
-        <span><img src="../../assets/recycling.png" alt="Logo" class="logo" /></span>
-        <span class="spacer-little"></span>
-        <span>FindYourSGR</span>
-        <!-- Spacer to push items to the right -->
-        <span class="spacer"></span>
-      
-        <!-- Menu Button with Navigation -->
-        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
-          <mat-icon>menu</mat-icon>
-        </button>
+        <div><img src="../../assets/recycling.png" class="logo" /></div>
+        <div class="text_logo">FindYourSGR</div>
       
         <!-- Menu Content -->
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item [routerLink]="'/map'">
-            <span>Harta</span>
-          </button>
-          <button mat-menu-item [routerLink]="'/login'">
-            <span>Logare</span>
-          </button>
-          <button mat-menu-item [routerLink]="'/authenticate'">
-            <span>Autentificare</span>
-          </button>
-        </mat-menu>
-      </mat-toolbar>
+        <div class="custom-menu" style="position: relative;">
+            <button mat-icon-button aria-label="Menu">
+                <mat-icon>menu</mat-icon>
+              </button>
+            <div class="menu-items">
+              <a href="/map" class="menu-item">Harta</a>
+              <a href="/login" class="menu-item">Logare</a>
+              <a href="/authenticate" class="menu-item">Autentificare</a>
+            </div>
+          </div>
+    </div>
 
       <!-- Main Content -->
       <div class="info-box">
