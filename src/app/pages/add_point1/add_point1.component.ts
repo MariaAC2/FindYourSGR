@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Optional } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add_point1',
@@ -9,16 +8,26 @@ import { Router } from '@angular/router';
 })
 
 export class AddPoint1Component {
-  selectedService: string = ''; // Tipul de serviciu (Punct SGR sau Cos de gunoi)
+  selectedService: string = '';
 
-  constructor(private dialogRef: MatDialogRef<AddPoint1Component>) {}
+  constructor(private dialogRef: MatDialogRef<AddPoint1Component>) 
+  {
+    this.dialogRef = null;
+  }
 
-  // Închide dialogul și trimite datele selectate
   onNext(): void {
-    this.dialogRef.close('openNext');
+    if (this.dialogRef) {
+      this.dialogRef.close('openNext');
+    } else {
+      console.warn('No MatDialogRef available to close the dialog.');
+    }
   }
 
   onClose(): void {
-    this.dialogRef.close();
+    if (this.dialogRef) {
+      this.dialogRef.close();
+    } else {
+      console.warn('No MatDialogRef available to close the dialog.');
+    }
   }
 }

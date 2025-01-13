@@ -6,7 +6,8 @@ import {
     Output,
     EventEmitter,
     OnDestroy,
-    AfterViewInit
+    AfterViewInit,
+    Optional
   } from "@angular/core";
   
 import { MatDialogRef } from '@angular/material/dialog';
@@ -47,7 +48,7 @@ export class AddPoint2Component implements OnInit{
     center: Array<number> = [26.096306, 44.439663];
     inputValue: string = "";
 
-    constructor(private dialogRef: MatDialogRef<AddPoint2Component>) {}
+    constructor(@Optional() private dialogRef: MatDialogRef<AddPoint2Component>) {}
 
     ngOnInit() {}
 

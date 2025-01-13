@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavigationEnd, Event, Router } from '@angular/router';
+import { Router, NavigationStart, NavigationEnd, NavigationError, NavigationCancel, Event } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AddPoint1Component } from "./pages/add_point1/add_point1.component";
 import { AddPoint2Component } from "./pages/add_point2/add_point2.component";
@@ -31,24 +31,24 @@ export class AppComponent {
 
   constructor(private router: Router, private dialog: MatDialog) {
     // Subscribe to router events to detect route changes
+    this.showNavbar = true;
     this.router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationEnd) {
-        this.activeTab = event.url;
-        // Display navbar only on the '/map' route
-        this.showNavbar = event.url === '/map';
-      }
+        if (event instanceof NavigationEnd) {
+            this.activeTab = event.url;
+            console.log('Active tab: ' + this.activeTab);
+        }
     });
   }
 
   onTabClick(tab: ITab): void {
     this.activeTab = tab.link;
+    console.log('Active tab: ' + this.activeTab);
 
-    if (tab.name === 'Adaugă un punct') {
-      this.openPopup(AddPoint1Component); // Open the dialog for AddPoint1
-    } else if (tab.name === "Contul meu") {
-      this.router.navigate(['/account']);
+    if (tab.link === '/add_point1') {
+        this.router.navigate(['/add_point1']);
+        this.openPopup(AddPoint1Component);
     } else {
-      this.router.navigate([tab.link]); // Navigate to other pages
+        this.router.navigate([this.activeTab]);
     }
   }
 
@@ -57,14 +57,20 @@ export class AppComponent {
     console.log('The map loaded: ' + status);
   }
 
+  isMainPage(): boolean {
+    const mainPages = ['/map', '/add_point1', '/favorites', '/history', '/account'];
+    return mainPages.includes(this.activeTab);
+  }
+
   openPopup(component: any): void {
     this.isPopupOpen = true;
-    const dialogRef = this.dialog.open(component);
+    component.dialogRef = this.dialog.open(component);
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'openNext') {
-        this.openPopup(AddPoint2Component);
-      }
+    component.dialogRef.afterClosed().subscribe(result => {
+    //   if (result === 'openNext') {
+    //     this.router.navigate(['/add_point2']);
+    //     this.openPopup(AddPoint2Component);
+    //   }
     });
   }
 

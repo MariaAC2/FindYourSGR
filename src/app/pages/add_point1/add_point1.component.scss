@@ -1,16 +1,17 @@
 .popup-container {
+    position: fixed;
     width: 300px;
     padding: 16px;
     display: flex;
     flex-direction: column;
-    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 2000;
     background-color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    z-index: 1000;
+    overflow: hidden;
 }
 
 .full-width {
@@ -47,8 +48,3 @@ label {
     margin-top: 4px;
     margin-bottom: 4px;
 }
-
-html.cdk-global-scrollblock {
-    position: static !important;
-    overflow: auto !important;
-  }
