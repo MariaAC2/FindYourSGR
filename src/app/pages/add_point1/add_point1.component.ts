@@ -10,10 +10,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class AddPoint1Component {
   selectedService: string = '';
 
-  constructor(private dialogRef: MatDialogRef<AddPoint1Component>) 
-  {
-    this.dialogRef = null;
-  }
+  constructor(private dialogRef: MatDialogRef<AddPoint1Component>) {}
 
   onNext(): void {
     if (this.dialogRef) {

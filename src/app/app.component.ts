@@ -46,7 +46,7 @@ export class AppComponent {
 
     if (tab.link === '/add_point1') {
         this.router.navigate(['/add_point1']);
-        this.openPopup(AddPoint1Component);
+        this.openPopup();
     } else {
         this.router.navigate([this.activeTab]);
     }
@@ -62,15 +62,15 @@ export class AppComponent {
     return mainPages.includes(this.activeTab);
   }
 
-  openPopup(component: any): void {
+  openPopup(): void {
     this.isPopupOpen = true;
-    component.dialogRef = this.dialog.open(component);
+    let dialogRef = this.dialog.open(AddPoint1Component);
 
-    component.dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(result => {
     //   if (result === 'openNext') {
     //     this.router.navigate(['/add_point2']);
-    //     this.openPopup(AddPoint2Component);
     //   }
+        console.log('Dialog closed with result: ' + result);
     });
   }
 
