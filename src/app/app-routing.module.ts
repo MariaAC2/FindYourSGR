@@ -7,6 +7,7 @@ import { AddPoint2Component } from "./pages/add_point2/add_point2.component";
 import { AccountComponent } from './pages/account/account.component';
 import { AuthenticationComponent } from "./pages/authentication/authentication.component";
 import { LoginComponent } from "./pages/login/login.component";
+import { DialogComponent } from './pages/dialog/dialog.component';
 
 export const routes: Routes = [
   {
@@ -26,12 +27,8 @@ export const routes: Routes = [
     component: AuthenticationComponent
   },
   {
-    path: 'add_point1',
-    component: AddPoint1Component,
-  },
-  {
-    path: 'add_point2',
-    component: AddPoint2Component,
+    path: 'add_point',
+    component: DialogComponent,
   },
   { path: 'account', 
     component: AccountComponent 

@@ -97,6 +97,35 @@ import {
       }
     }
 
+    addCSVLayer(url: string) {
+        const csvLayer = new CSVLayer({
+            url: url,
+            copyright: "Puncte SGR Lidl"
+        });
+    
+        const simpleMarkerSymbol = new SimpleMarkerSymbol({
+                color: [31, 12, 176],
+                outline: {
+                color: [255, 255, 255],
+                width: 1
+            }
+        });
+
+        // Assign the renderer using SimpleRenderer
+        csvLayer.renderer = new SimpleRenderer({
+            symbol: simpleMarkerSymbol
+        });
+    
+        // Add the CSV Layer to the map
+        csvLayer.when(() => {
+            console.log("CSV Layer loaded successfully.");
+        }).catch((error) => {
+            console.error("Error loading CSV Layer:", error);
+        });
+        
+        this.map.add(csvLayer, 0);
+    }
+
     addFeatureLayers() {
         if (!this.map) {
             console.error('Map is not initialized. Cannot add layers.');

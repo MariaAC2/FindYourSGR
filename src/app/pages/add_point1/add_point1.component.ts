@@ -1,30 +1,16 @@
-import { Component, Optional } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-add_point1',
-  templateUrl: './add_point1.component.html',
-  styleUrls: ['./add_point1.component.scss']
+    selector: 'app-add_point1',
+    templateUrl: './add_point1.component.html',
+    styleUrls: ['./add_point1.component.scss']
 })
-
 export class AddPoint1Component {
-  selectedService: string = '';
+    constructor(public dialogRef: MatDialogRef<AddPoint1Component>) {}
 
-  constructor(private dialogRef: MatDialogRef<AddPoint1Component>) {}
-
-  onNext(): void {
-    if (this.dialogRef) {
-      this.dialogRef.close('openNext');
-    } else {
-      console.warn('No MatDialogRef available to close the dialog.');
+    closeDialog(): void {
+        this.dialogRef.close(); // Close the dialog
+        console.log('Dialog has been closed.');
     }
-  }
-
-  onClose(): void {
-    if (this.dialogRef) {
-      this.dialogRef.close();
-    } else {
-      console.warn('No MatDialogRef available to close the dialog.');
-    }
-  }
 }
