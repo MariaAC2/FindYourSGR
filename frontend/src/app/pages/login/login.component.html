@@ -1,0 +1,62 @@
+<div class="login-container">
+    <div class="left-column" >
+      
+      <h2>Găsește Punctele SGR din Apropierea Ta!</h2>
+        <p>
+          Descoperă rapid unde poți recicla sticle și ambalaje, direct de pe hartă!<br>
+          Adaugă locații noi, verifică distanțele și coada la punctele SGR din zona ta, scanează bonurile și ai șansa să câștigi premii atractive!<br>
+          Fii parte din schimbare și ajută la crearea unui mediu mai curat!
+        </p>
+    </div>
+  
+    <div class="login-right">
+      <h2 class="login-title">Logare</h2>
+      <p class="login-subtitle">Loghează-te în contul tău în secunde</p>
+  
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="username">Nume utilizator</label>
+          <input 
+            id="username" 
+            type="text" 
+            formControlName="username" 
+            class="form-control" 
+            placeholder="Enter your username" 
+          />
+          <div *ngIf="loginForm.get('username').invalid && loginForm.get('username').touched" class="error-message">
+            Numele de utilizator este obligatoriu (minim 6 caractere).
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="password">Parola</label>
+          <input 
+            id="password" 
+            type="password" 
+            formControlName="password" 
+            class="form-control" 
+            placeholder="Enter your password" 
+          />
+          <div *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched" class="error-message">
+            Parola este obligatorie (minim 12 caractere).
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <mat-checkbox formControlName="keepLoggedIn">Ține-mă logat</mat-checkbox>
+        </div>
+  
+        <div class="form-actions">
+          <button mat-raised-button [ngClass]="buttonClass" type="submit" [disabled]="loginForm.invalid">Logare</button>
+          <button mat-button color="accent" (click)="router.navigate(['/forgot-password'])">Ai uitat parola?</button>
+        </div>
+
+        <!-- Mesaj de înregistrare -->
+      <div class="signup-message" (click)="router.navigate(['/authenticate'])">
+        Nu ai cont? Autentifică-te aici!
+      </div>
+      </form>
+    </div>
+  </div>
+  
+
