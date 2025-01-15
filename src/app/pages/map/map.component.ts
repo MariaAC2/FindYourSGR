@@ -26,9 +26,9 @@ import {
   import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
   
   import FeatureSet from '@arcgis/core/rest/support/FeatureSet';
-  
   import RouteParameters from '@arcgis/core/rest/support/RouteParameters';
   import * as route from "@arcgis/core/rest/route.js";
+  import Search from "@arcgis/core/widgets/Search";
   
   @Component({
     selector: "app-map",
@@ -90,40 +90,12 @@ import {
         await this.view.when();
         console.log("ArcGIS map loaded");
         this.addRouting();
+        this.addSearchWidget();
         return this.view;
       } catch (error) {
         console.error("Error loading the map: ", error);
         alert("Error loading the map");
       }
-    }
-
-    addCSVLayer(url: string) {
-        const csvLayer = new CSVLayer({
-            url: url,
-            copyright: "Puncte SGR Lidl"
-        });
-    
-        const simpleMarkerSymbol = new SimpleMarkerSymbol({
-                color: [31, 12, 176],
-                outline: {
-                color: [255, 255, 255],
-                width: 1
-            }
-        });
-
-        // Assign the renderer using SimpleRenderer
-        csvLayer.renderer = new SimpleRenderer({
-            symbol: simpleMarkerSymbol
-        });
-    
-        // Add the CSV Layer to the map
-        csvLayer.when(() => {
-            console.log("CSV Layer loaded successfully.");
-        }).catch((error) => {
-            console.error("Error loading CSV Layer:", error);
-        });
-        
-        this.map.add(csvLayer, 0);
     }
 
     addFeatureLayers() {
@@ -132,33 +104,88 @@ import {
             return;
         }
 
-        const csvLayer = new CSVLayer({
+        // Puncte SGR Lidl
+        const csvLayerLidl = new CSVLayer({
             url: "./assets/PuncteSGRLidl.csv",
             copyright: "Puncte SGR Lidl"
         });
     
-        const simpleMarkerSymbol = new SimpleMarkerSymbol({
-                color: [31, 12, 176],
-                outline: {
-                color: [255, 255, 255],
-                width: 1
-            }
-        });
+        const simpleMarkerSymbolLidl = {
+            type: "picture-marker", // autocasts as new PictureMarkerSymbol()
+            url: "./assets/Lidl-Logo.png", // Path to your image
+            width: "24px", // Set the width of the logo
+            height: "24px" // Set the height of the logo
+        };
 
         // Assign the renderer using SimpleRenderer
-        csvLayer.renderer = new SimpleRenderer({
-            symbol: simpleMarkerSymbol
+        csvLayerLidl.renderer = new SimpleRenderer({
+            symbol: simpleMarkerSymbolLidl as any
         });
     
         // Add the CSV Layer to the map
-        csvLayer.when(() => {
+        csvLayerLidl.when(() => {
             console.log("CSV Layer loaded successfully.");
         }).catch((error) => {
             console.error("Error loading CSV Layer:", error);
         });
         
-        this.map.add(csvLayer, 0);
+        this.map.add(csvLayerLidl, 0);
+
+        // Puncte SGR Kaufland
+        const csvLayerKaufland = new CSVLayer({
+            url: "./assets/PuncteSGRKaufland.csv",
+            copyright: "Puncte SGR Kaufland"
+        });
+    
+        const simpleMarkerSymbolKaufland = {
+            type: "picture-marker", // autocasts as new PictureMarkerSymbol()
+            url: "./assets/Kaufland-Logo.png", // Path to your image
+            width: "24px", // Set the width of the logo
+            height: "24px" // Set the height of the logo
+        };
+
+        // Assign the renderer using SimpleRenderer
+        csvLayerKaufland.renderer = new SimpleRenderer({
+            symbol: simpleMarkerSymbolKaufland as any
+        });
+    
+        // Add the CSV Layer to the map
+        csvLayerKaufland.when(() => {
+            console.log("CSV Layer loaded successfully.");
+        }).catch((error) => {
+            console.error("Error loading CSV Layer:", error);
+        });
+        
+        this.map.add(csvLayerKaufland, 0);
+
+        // Puncte SGR Carrefour
+        const csvLayerCarrefour = new CSVLayer({
+            url: "./assets/PuncteSGRCarrefour.csv",
+            copyright: "Puncte SGR Carrefour"
+        });
+    
+        const simpleMarkerSymbolCarrefour ={
+            type: "picture-marker", // autocasts as new PictureMarkerSymbol()
+            url: "./assets/Carrefour-Logo.png", // Path to your image
+            width: "24px", // Set the width of the logo
+            height: "24px" // Set the height of the logo
+        };
+
+        // Assign the renderer using SimpleRenderer
+        csvLayerCarrefour.renderer = new SimpleRenderer({
+            symbol: simpleMarkerSymbolCarrefour as any
+        });
+    
+        // Add the CSV Layer to the map
+        csvLayerCarrefour.when(() => {
+            console.log("CSV Layer loaded successfully.");
+        }).catch((error) => {
+            console.error("Error loading CSV Layer:", error);
+        });
+        
+        this.map.add(csvLayerCarrefour, 0);
     }
+
     
   
     addGraphicsLayer() {
@@ -168,6 +195,13 @@ import {
       this.map.add(this.graphicsLayerUserPoints);
       this.graphicsLayerRoutes = new GraphicsLayer();
       this.map.add(this.graphicsLayerRoutes);
+    }
+
+    addSearchWidget() {
+        const searchWidget = new Search({
+            view: this.view
+        });
+        this.view.ui.add(searchWidget, "top-right");
     }
   
     addRouting() {

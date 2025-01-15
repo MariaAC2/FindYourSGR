@@ -1,13 +1,18 @@
 <div class="popup-container">
     <h2>Adaugă un punct pe hartă</h2>
     <p><strong>Pasul 2: Adresa serviciului </strong></p>
-  
-    <label for="serviceAddress">Adresa exactă</label>
-    <input id="user-input" matInput class="full-width font" [(ngModel)]="inputValue" placeholder="Introdu adresa exactă">
 
-    <label for="serviceAddress">sau</label>
     <div *ngIf="isPopupVisible" #mapViewPopup class="map-view-popup"></div>
     <button mat-raised-button color="primary" class="save-button font" (click)="openPopup()">Deschide harta</button>
+
+   
+    <label for="serviceAddress">Adresa exactă</label>
+    <input id="user-input" matInput class="full-width font" 
+    [(ngModel)]="inputValue" placeholder="Introdu adresa exactă" (keyup.enter)="searchByAddress(inputValue)">
+
+    <label for="serviceAddress">sau</label>
+
+    <button mat-raised-button color="primary" class="save-button font" (click)="searchByCurrentLocation()">Permite folosirea locației curente</button>
   
     <div class="button-group">
       <button mat-raised-button color="primary" class="save-button font" (click)="onSave()">Salvează</button>
