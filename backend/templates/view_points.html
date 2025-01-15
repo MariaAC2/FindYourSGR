@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View SGR Points</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #d1e7fd;
+        }
+    </style>
+</head>
+<body>
+    <h2>SGR Points</h2>
+    
+    {% if points %}
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Queue Size</th>
+                <th>Working</th>
+                <th>Coordinate X</th>
+                <th>Coordinate Y</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, point in points.items() %}
+            <tr>
+                <td><a href="{{ url_for('edit_point', point_id=point['id']) }}">{{ point['id'] }}</a></td>
+                <td>{{ point['title'] }}</td>
+                <td>{{ point['description'] }}</td>
+                <td>{{ point['size_of_queue'] }}</td>
+                <td>{{ point['working'] }}</td>
+                <td>{{ point['coordinate_x'] }}</td>
+                <td>{{ point['coordinate_y'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    {% else %}
+    <p>No SGR Points found.</p>
+    {% endif %}
+
+    <br>
+    <a href="/">Return to Home</a>
+</body>
+</html>
