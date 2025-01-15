@@ -1,0 +1,8 @@
+<div *ngIf="currentPage === 1">
+    <app-add_point1 (nextPage)="goToNextPage()"></app-add_point1>
+</div>
+  
+<div *ngIf="currentPage === 2">
+    <app-add_point2 (previousPage)="goToPreviousPage()"></app-add_point2>
+</div>
+  

@@ -4,5 +4,43 @@
     <div #mapViewNode class="map-view"></div>
 </div>
 
+<button 
+    (click)="toggleHistory()" 
+    class="toggle-btn history-btn" 
+    [class.active]="isHistoryVisible"
+    data-btn="Vezi istoricul căutărilor">
+    <img src="assets/History Icon.png" alt="History Icon" class="icon">
+</button>
+
+<button 
+    (click)="toggleFavorites()" 
+    class="toggle-btn favorites-btn" 
+    [class.active]="isFavoritesVisible"
+    data-btn="Vezi favorite">
+    <img src="assets/Favorites Icon.png" alt="Favorites Icon" class="icon">
+</button>
+
+<div class="search-history" [class.visible]="isHistoryVisible">
+    <h3>Istoric căutări</h3>
+    <ul>
+        <li *ngFor="let term of searchHistory" (click)="onHistoryItemClick(term)">
+            {{ term }}
+        </li>
+    </ul>
+</div>
+
+
+<div id="customPopup" class="custom-popup">
+    <div class="popup-header">
+        <p id="popupTitle">Coordinates:</p>
+        <button id="closePopupBtn" class="popup-close-btn">&times;</button>
+    </div>
+    <div id="popupContent" class="popup-content">
+        <p><strong>Longitude:</strong> <span id="longitudeValue"></span></p>
+        <p><strong>Latitude:</strong> <span id="latitudeValue"></span></p>
+    </div>
+    <div id="favoriteBtn" class="heart-shape"></div>
+</div>
+
 <!-- Floating Action Button (FAB) -->
-<button class="fab" (click)="clearRouter()">x</button>
+<!-- <button class="fab" (click)="clearRouter()">x</button> -->
