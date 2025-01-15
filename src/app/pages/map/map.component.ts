@@ -53,6 +53,8 @@ import {
     loaded = false;
     directionsElement: any;
     searchHistory: string[] = [];
+    isHistoryVisible: boolean = false;
+    isFavoritesVisible: boolean = false;
   
     constructor() { }
   
@@ -61,6 +63,19 @@ import {
         this.loaded = this.view.ready;
         this.mapLoadedEvent.emit(true);
       });
+    }
+
+    toggleHistory() {
+        this.isHistoryVisible = !this.isHistoryVisible;
+    }
+
+    toggleFavorites() {
+        this.isFavoritesVisible = !this.isFavoritesVisible;
+    }
+
+    onHistoryItemClick(term: string) {
+        console.log(`Clicked on: ${term}`);
+        // Perform additional actions, e.g., navigate or search with this term
     }
   
     async initializeMap() {
@@ -205,9 +220,8 @@ import {
       
         searchWidget.on("search-complete", (event) => {
             const searchTerm = event.searchTerm;
-        
-                // Add the search term to the history
-                if (searchTerm && !this.searchHistory.includes(searchTerm)) {
+
+            if (searchTerm && !this.searchHistory.includes(searchTerm)) {
                 this.searchHistory.unshift(searchTerm);
                 if (this.searchHistory.length > 5) {
                     this.searchHistory.pop();
@@ -222,6 +236,7 @@ import {
         const customPopup = document.getElementById("customPopup");
         const popupContent = document.getElementById("popupContent");
         const closePopupBtn = document.getElementById("closePopupBtn");
+        const favoriteBtn = document.getElementById("favoriteBtn");
     
         // Close the popup when the close button is clicked
         closePopupBtn.addEventListener("click", () => {
@@ -246,7 +261,6 @@ import {
                     popupContent.innerHTML = `
                         <p><strong>Longitude:</strong> ${longitude}</p>
                         <p><strong>Latitude:</strong> ${latitude}</p>
-                        <button id="favoriteBtn" class="heart-btn">&#x2764;</button>
                     `;
 
                     // Zoom to the feature
@@ -267,16 +281,7 @@ import {
                         customPopup.style.display = "block"; // Display the popup
                     });
 
-                    // setTimeout(() => {
-                    //     const button = document.getElementById('addToFavoriteBtn');
-                    //     if (button) {
-                    //         button.addEventListener('click', () => {
-                    //             this.addToFavorite(graphic);
-                    //         });
-                    //     }
-                    // }, 0);
                     setTimeout(() => {
-                        const favoriteBtn = document.getElementById('favoriteBtn');
                         if (favoriteBtn) {
                             favoriteBtn.addEventListener('click', () => {
                                 favoriteBtn.classList.toggle('favorited'); // Toggle green color
@@ -292,64 +297,12 @@ import {
             });
         });
     }
-
-    // zoomOnPoint() {
-    //     this.view.on('double-click', (event) => {
-    //         event.stopPropagation(); // Prevent default zoom behavior
-    //         const screenPoint = {
-    //             x: event.x,
-    //             y: event.y,
-    //         };
-    
-    //         // Hit test to identify features
-    //         this.view?.hitTest(screenPoint).then((response) => {
-    //             if (response.results.length > 0) {
-    //                 const graphic = (response.results[0] as any).graphic;
-    //                 const { longitude, latitude } = graphic.geometry as Point;
-    //                 // Define the dynamic content
-                    
-
-    //                 const popupTemplate = {
-    //                     title: "Feature Information",
-    //                     content: content
-    //                 };
-    
-    //                 // Zoom to the point
-    //                 this.view?.goTo({
-    //                     target: graphic.geometry,
-    //                     zoom: 15,
-    //                 });           
-    
-    //                 this.view.popup.defaultPopupTemplateEnabled = false; 
-    //                 this.view.popup.actions = null;
-    //                 // Open the popup with the custom content
-    //                 this.view?.popup.open({
-    //                     title: popupTemplate.title,
-    //                     content: popupTemplate.content,
-    //                     location: graphic.geometry,
-    //                 });
-    
-    //                 // Wait for the popup DOM to render, then attach the event listener
-    //                 setTimeout(() => {
-    //                     const container = this.view?.popup.container as HTMLElement;
-    //                     const button = container?.querySelector('#addToFavoriteBtn');
-    //                     if (button) {
-    //                         button.addEventListener('click', () => {
-    //                             this.addToFavorite(graphic);
-    //                         });
-    //                     }
-    //                 }, 0);
-    //             }
-    //         });
-    //     });
-    // }
     
     // Add to favorite method
     addToFavorite(graphic: any) {
         console.log("Added to favorite:", graphic);
         alert(`Feature with longitude ${graphic.geometry.longitude} and latitude ${graphic.geometry.latitude} added to favorites.`);
     }
-    
   
     addRouting() {
       const routeUrl = "https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World";

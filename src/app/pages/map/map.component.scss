@@ -43,29 +43,102 @@
   background-color: #c0392b;
 }
 
-.search-history {
-    position: absolute;
-    bottom: 10px; /* Move to the bottom */
-    right: 10px;  /* Keep aligned to the right */
-    background: white;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
+.icon {
+    width: 30px; /* Larger icon size */
+    height: 30px; /* Larger icon size */
+    display: block; /* Ensure it behaves like a block element */
+    margin: 0 auto; /* Center horizontally */
 }
 
-.search-history h3 {
-    margin: 0 0 5px 0;
+.toggle-btn {
+    position: fixed; /* Ensure buttons are fixed on the screen */
+    padding: 5px 5px; /* Add padding for a larger clickable area */
+    background-color: white; /* White background for better contrast */
+    border: 2px solid #ccc; /* Light border for visibility */
+    cursor: pointer; /* Pointer cursor for interactivity */
+    transition: all 0.3s ease; /* Smooth hover and active transitions */
+}
+
+.history-btn {
+    top: 120px; /* Adjust position from the top */
+    right: 20px; /* Position to the right */
+}
+
+.favorites-btn {
+    top: 180px; /* Adjust position from the top */
+    right: 20px; /* Position to the right */
+}
+
+.toggle-btn:hover {
+    background-color: #f1f1f1; /* Slight gray background on hover */
+    border-color: #ddd; /* Darker blue border on hover */
+}
+
+.toggle-btn.active {
+    background-color: #f1f1f1; /* Slight gray background on hover */
+    border-color: #ddd; /* Darker blue border on hover */
+}
+
+/* Tooltip styling */
+.toggle-btn::after {
+    content: attr(data-btn); /* Use the data-tooltip attribute for text */
+    position: absolute;
+    top: 40px; /* Position above the button */
+    right: 0;
+    background-color: #ddd; /* Dark background for the tooltip */
+    color: #333;
+    padding: 5px 10px;
+    font-size: 12px; /* Smaller font size */
+    white-space: nowrap; /* Prevent wrapping */
+    opacity: 0; /* Initially hidden */
+    pointer-events: none; /* Prevent interaction */
+    transition: opacity 0.3s ease; /* Smooth appearance */
+}
+
+.toggle-btn:hover::after {
+    opacity: 1; /* Show the tooltip on hover */
+}
+
+.search-history {
+    position: fixed; /* Fixed on the viewport */
+    top: 150px; /* Position from the top */
+    right: 100px; /* Position from the left */
+    width: 300px; /* Set menu width */
+    background-color: #fff; /* Background color */
+    border: 1px solid #ddd; /* Adds a border */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Shadow for better visibility */
+    padding: 10px; /* Padding inside the menu */
+    display: none; /* Hidden by default */
+    z-index: 1000; /* Ensure it appears above other elements */
+    text-align: center; /* Center the text */
+    overflow-y: auto; /* Add scrolling if the content exceeds the screen height */
+    max-height: 500px; /* Optional: Limit height for long lists */
+}
+
+
+.search-history.visible {
+    display: block; /* Show the menu when the "visible" class is applied */
 }
 
 .search-history ul {
     list-style-type: none;
-    margin: 0;
     padding: 0;
+    margin: 0;
 }
 
-.search-history li {
-    margin-bottom: 5px;
+.search-history ul li {
+    padding: 10px; /* Add padding for the content */
+    margin: 5px 0; /* Add spacing between items */
+    border: 1px solid #ddd; /* Add border on all sides */
+    border-radius: 5px; /* Optional: Rounded edges for each item */
+    background-color: #f9f9f9; /* Light background color for list items */
+    cursor: pointer; /* Pointer cursor for clickable items */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+}
+
+.search-history ul li:hover {
+    background-color: #f1f1f1; /* Change background color on hover */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow effect on hover */
 }
 
 .custom-popup {
@@ -102,8 +175,8 @@
     background: #f9e1ea none repeat scroll 0 0;
     border-radius: 50%;
     display: block;
-    height: 100px; /* Adjust size */
-    width: 100px; /* Adjust size */
+    height: 50px;
+    width: 50px;
     margin: 10px auto 0;
     text-align: center;
     cursor: pointer; /* Make it clickable */
@@ -115,7 +188,7 @@
     content: "❤";
     font-size: 2em; /* Adjust font size */
     position: relative;
-    top: 25px; /* Adjust position for the icon */
+    top: 2px; /* Adjust position for the icon */
 }
 
 .heart-shape.favorited {
