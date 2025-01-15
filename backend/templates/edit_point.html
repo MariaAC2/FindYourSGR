@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit SGR Point</title>
+</head>
+<body>
+    <h2>Edit SGR Point</h2>
+
+    <form method="POST">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" value="{{ point['title'] }}" required>
+        <br><br>
+        
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" value="{{ point['description'] }}" required>
+        <br><br>
+
+        <label for="size_of_queue">Queue Size:</label>
+        <input type="number" id="size_of_queue" name="size_of_queue" value="{{ point['size_of_queue'] }}" required>
+        <br><br>
+
+        <label for="working">Working:</label>
+        <input type="text" id="working" name="working" value="{{ point['working'] }}" required>
+        <br><br>
+
+        <label for="coordinate_x">Coordinate X:</label>
+        <input type="number" id="coordinate_x" name="coordinate_x" step="0.01" value="{{ point['coordinate_x'] }}" required>
+        <br><br>
+
+        <label for="coordinate_y">Coordinate Y:</label>
+        <input type="number" id="coordinate_y" name="coordinate_y" step="0.01" value="{{ point['coordinate_y'] }}" required>
+        <br><br>
+
+        <input type="submit" value="Save Changes">
+    </form>
+
+    <br>
+    <a href="/view_points">Back to View Points</a>
+</body>
+</html>
