@@ -31,7 +31,7 @@ export class AddPoint2Component implements OnInit{
     @Output() mapLoadedEvent = new EventEmitter<boolean>();
 
     @ViewChild("mapViewPopup", { static: false }) private mapViewEl: ElementRef;
-    isPopupVisible: boolean = false;
+    isMapVisible: boolean = false;
 
     map: esri.Map;
     view: esri.MapView;
@@ -49,11 +49,15 @@ export class AddPoint2Component implements OnInit{
     }
 
     onClose(): void {
-      this.dialogRef.close();
+        this.dialogRef.close();
     }
 
-    openPopup() {
-        this.isPopupVisible = true;
+    closeMap() {
+        this.isMapVisible = false;
+    }
+
+    openMap() {
+        this.isMapVisible = true;
     
         setTimeout(() => {
             if (!this.view) {
@@ -215,9 +219,5 @@ export class AddPoint2Component implements OnInit{
     addGraphicsLayer() {
         this.graphicsLayer = new GraphicsLayer();
         this.map.add(this.graphicsLayer);    
-    }
-
-    closePopup() {
-        this.isPopupVisible = false;
     }
 }

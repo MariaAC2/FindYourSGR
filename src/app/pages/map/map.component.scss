@@ -42,3 +42,88 @@
 .fab:hover {
   background-color: #c0392b;
 }
+
+.search-history {
+    position: absolute;
+    bottom: 10px; /* Move to the bottom */
+    right: 10px;  /* Keep aligned to the right */
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.search-history h3 {
+    margin: 0 0 5px 0;
+}
+
+.search-history ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.search-history li {
+    margin-bottom: 5px;
+}
+
+.custom-popup {
+    position: absolute;
+    display: none;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    width: 250px;
+}
+
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+
+.popup-close-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.popup-content {
+    margin-top: 10px;
+}
+
+.heart-shape {
+    background: #f9e1ea none repeat scroll 0 0;
+    border-radius: 50%;
+    display: block;
+    height: 100px; /* Adjust size */
+    width: 100px; /* Adjust size */
+    margin: 10px auto 0;
+    text-align: center;
+    cursor: pointer; /* Make it clickable */
+    transition: background 0.3s ease, transform 0.2s ease; /* Smooth transition */
+}
+
+.heart-shape:before {
+    color: #f3166e;
+    content: "❤";
+    font-size: 2em; /* Adjust font size */
+    position: relative;
+    top: 25px; /* Adjust position for the icon */
+}
+
+.heart-shape.favorited {
+    background: #c8f1c1; /* Green background for favorited */
+}
+
+.heart-shape.favorited:before {
+    color: #34a853; /* Green heart for favorited */
+}
+
+

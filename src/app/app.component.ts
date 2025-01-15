@@ -21,21 +21,21 @@ export class AppComponent {
     { name: 'Hartă', link: '/map' },
     { name: "Adaugă un punct", link: '/map/add_point' },
     { name: "Favorite", link: '/favorites' },
-    { name: "Istoric căutări", link: '/history' },
+    // { name: "Istoric căutări", link: '/history' },
     { name: "Contul meu", link: '/account' }
   ];
 
   activeTab = this.tabs[0].link;
 
-  constructor(private router: Router, private dialog: MatDialog) {
+    constructor(private router: Router, private dialog: MatDialog) {
     // Subscribe to router events to detect route changes
-    this.router.events.subscribe((event: Event) => {
-        if (event instanceof NavigationEnd) {
-            this.activeTab = event.url;
-            console.log('Active tab: ' + this.activeTab);
-        }
-    });
-  }
+        this.router.events.subscribe((event: Event) => {
+            if (event instanceof NavigationEnd) {
+                this.activeTab = event.url;
+                console.log('Active tab: ' + this.activeTab);
+            }
+        });
+    }
 
     onTabClick(tab: ITab): void {
         this.activeTab = tab.link;
@@ -43,15 +43,31 @@ export class AppComponent {
         this.router.navigate([this.activeTab]);
 
         if (this.activeTab === '/map/add_point') {
-            this.openDialog();
+            this.onOpenFirst();
         }
     }
 
-    openDialog(): void {
-        const dialogRef = this.dialog.open(AddPoint2Component);
-
-        dialogRef.afterClosed().subscribe(result => {
-            console.log('Dialog closed with result:', result);
+    onOpenFirst(): void {
+        const dialogRef1 = this.dialog.open(AddPoint1Component);
+    
+        // Listen for the `nextPage` event
+        dialogRef1.componentInstance.nextPage.subscribe(() => {
+          dialogRef1.componentInstance.onClose();
+          this.onOpenSecond();
+        });
+    
+        dialogRef1.afterClosed().subscribe((result) => {
+            this.router.navigate(['/map']);
+            console.log('First dialog closed with result:', result);
+        });
+      }
+    
+    onOpenSecond(): void {
+        const dialogRef2 = this.dialog.open(AddPoint2Component);
+    
+        dialogRef2.afterClosed().subscribe((result) => {
+            this.router.navigate(['/map']);
+            console.log('Second dialog closed with result:', result);
         });
     }
 
@@ -61,7 +77,7 @@ export class AppComponent {
   }
 
   isMainPage(): boolean {
-    const mainPages = ['/map', '/map/add_point', '/favorites', '/history', '/account'];
+    const mainPages = ['/map', '/map/add_point', '/favorites', '/account'];
     return mainPages.includes(this.activeTab);
   }
 }

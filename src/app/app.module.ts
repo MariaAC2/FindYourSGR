@@ -40,6 +40,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AccountComponent } from './pages/account/account.component';
+import { AddPointComponent } from './pages/add-point/add-point.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { AccountComponent } from './pages/account/account.component';
     AddPoint2Component,
     LoginComponent,
     AuthenticationComponent,
-    AccountComponent
+    AccountComponent,
+    AddPointComponent
   ],
   imports: [
     BrowserModule,

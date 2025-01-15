@@ -20,7 +20,6 @@ import {
   import Graphic from '@arcgis/core/Graphic';
   import Point from '@arcgis/core/geometry/Point';
   
-  import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
   import CSVLayer from "@arcgis/core/layers/CSVLayer";
   import SimpleRenderer from "@arcgis/core/renderers/SimpleRenderer";
   import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
@@ -29,6 +28,7 @@ import {
   import RouteParameters from '@arcgis/core/rest/support/RouteParameters';
   import * as route from "@arcgis/core/rest/route.js";
   import Search from "@arcgis/core/widgets/Search";
+  import PopupTemplate from '@arcgis/core/PopupTemplate';
   
   @Component({
     selector: "app-map",
@@ -52,6 +52,7 @@ import {
     basemap = "streets-vector";
     loaded = false;
     directionsElement: any;
+    searchHistory: string[] = [];
   
     constructor() { }
   
@@ -91,6 +92,7 @@ import {
         console.log("ArcGIS map loaded");
         this.addRouting();
         this.addSearchWidget();
+        this.zoomOnPoint();
         return this.view;
       } catch (error) {
         console.error("Error loading the map: ", error);
@@ -186,23 +188,168 @@ import {
         this.map.add(csvLayerCarrefour, 0);
     }
 
-    
-  
     addGraphicsLayer() {
-      this.graphicsLayer = new GraphicsLayer();
-      this.map.add(this.graphicsLayer);
-      this.graphicsLayerUserPoints = new GraphicsLayer();
-      this.map.add(this.graphicsLayerUserPoints);
-      this.graphicsLayerRoutes = new GraphicsLayer();
-      this.map.add(this.graphicsLayerRoutes);
+        this.graphicsLayer = new GraphicsLayer();
+        this.map.add(this.graphicsLayer);
+        this.graphicsLayerUserPoints = new GraphicsLayer();
+        this.map.add(this.graphicsLayerUserPoints);
+        this.graphicsLayerRoutes = new GraphicsLayer();
+        this.map.add(this.graphicsLayerRoutes);
     }
 
-    addSearchWidget() {
+    addSearchWidget() {      
         const searchWidget = new Search({
-            view: this.view
+          view: this.view,
+          includeDefaultSources: true,
         });
+      
+        searchWidget.on("search-complete", (event) => {
+            const searchTerm = event.searchTerm;
+        
+                // Add the search term to the history
+                if (searchTerm && !this.searchHistory.includes(searchTerm)) {
+                this.searchHistory.unshift(searchTerm);
+                if (this.searchHistory.length > 5) {
+                    this.searchHistory.pop();
+                }
+            }
+        });
+      
         this.view.ui.add(searchWidget, "top-right");
     }
+
+    zoomOnPoint() {
+        const customPopup = document.getElementById("customPopup");
+        const popupContent = document.getElementById("popupContent");
+        const closePopupBtn = document.getElementById("closePopupBtn");
+    
+        // Close the popup when the close button is clicked
+        closePopupBtn.addEventListener("click", () => {
+            customPopup.style.display = "none";
+        });
+    
+        this.view.on("double-click", (event) => {
+            event.stopPropagation(); // Prevent default zoom behavior
+    
+            const screenPoint = {
+                x: event.x,
+                y: event.y,
+            };
+    
+            // Perform hit test to find features
+            this.view.hitTest(screenPoint).then((response) => {
+                if (response.results.length > 0) {
+                    const graphic = (response.results[0] as any).graphic;
+                    const { longitude, latitude } = graphic.geometry;
+    
+                    // Set the popup content to the coordinates
+                    popupContent.innerHTML = `
+                        <p><strong>Longitude:</strong> ${longitude}</p>
+                        <p><strong>Latitude:</strong> ${latitude}</p>
+                        <button id="favoriteBtn" class="heart-btn">&#x2764;</button>
+                    `;
+
+                    // Zoom to the feature
+                    this.view.goTo({
+                        target: graphic.geometry,
+                        zoom: 15
+                    }).then(() => {
+                        // Ensure the popup dimensions are available
+                        customPopup.style.display = "block"; // Temporarily make it visible
+                        const popupWidth = customPopup.offsetWidth; // Get the width
+                        const popupHeight = customPopup.offsetHeight; // Get the height
+                        customPopup.style.display = "none"; // Hide it again
+
+                        // Position the popup at the feature's location
+                        const screenCoords = this.view.toScreen(graphic.geometry); // Use the feature's geometry
+                        customPopup.style.left = `${screenCoords.x - popupWidth / 2}px`; // Center horizontally
+                        customPopup.style.bottom = `${screenCoords.y + 50}px`; // Position above the feature
+                        customPopup.style.display = "block"; // Display the popup
+                    });
+
+                    // setTimeout(() => {
+                    //     const button = document.getElementById('addToFavoriteBtn');
+                    //     if (button) {
+                    //         button.addEventListener('click', () => {
+                    //             this.addToFavorite(graphic);
+                    //         });
+                    //     }
+                    // }, 0);
+                    setTimeout(() => {
+                        const favoriteBtn = document.getElementById('favoriteBtn');
+                        if (favoriteBtn) {
+                            favoriteBtn.addEventListener('click', () => {
+                                favoriteBtn.classList.toggle('favorited'); // Toggle green color
+                                if (favoriteBtn.classList.contains('favorited')) {
+                                    console.log("Added to favorites:", { longitude, latitude });
+                                } else {
+                                    console.log("Removed from favorites:", { longitude, latitude });
+                                }
+                            });
+                        }
+                    }, 0);
+                }
+            });
+        });
+    }
+
+    // zoomOnPoint() {
+    //     this.view.on('double-click', (event) => {
+    //         event.stopPropagation(); // Prevent default zoom behavior
+    //         const screenPoint = {
+    //             x: event.x,
+    //             y: event.y,
+    //         };
+    
+    //         // Hit test to identify features
+    //         this.view?.hitTest(screenPoint).then((response) => {
+    //             if (response.results.length > 0) {
+    //                 const graphic = (response.results[0] as any).graphic;
+    //                 const { longitude, latitude } = graphic.geometry as Point;
+    //                 // Define the dynamic content
+                    
+
+    //                 const popupTemplate = {
+    //                     title: "Feature Information",
+    //                     content: content
+    //                 };
+    
+    //                 // Zoom to the point
+    //                 this.view?.goTo({
+    //                     target: graphic.geometry,
+    //                     zoom: 15,
+    //                 });           
+    
+    //                 this.view.popup.defaultPopupTemplateEnabled = false; 
+    //                 this.view.popup.actions = null;
+    //                 // Open the popup with the custom content
+    //                 this.view?.popup.open({
+    //                     title: popupTemplate.title,
+    //                     content: popupTemplate.content,
+    //                     location: graphic.geometry,
+    //                 });
+    
+    //                 // Wait for the popup DOM to render, then attach the event listener
+    //                 setTimeout(() => {
+    //                     const container = this.view?.popup.container as HTMLElement;
+    //                     const button = container?.querySelector('#addToFavoriteBtn');
+    //                     if (button) {
+    //                         button.addEventListener('click', () => {
+    //                             this.addToFavorite(graphic);
+    //                         });
+    //                     }
+    //                 }, 0);
+    //             }
+    //         });
+    //     });
+    // }
+    
+    // Add to favorite method
+    addToFavorite(graphic: any) {
+        console.log("Added to favorite:", graphic);
+        alert(`Feature with longitude ${graphic.geometry.longitude} and latitude ${graphic.geometry.latitude} added to favorites.`);
+    }
+    
   
     addRouting() {
       const routeUrl = "https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World";
