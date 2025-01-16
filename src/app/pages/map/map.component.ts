@@ -52,7 +52,8 @@ import {
     basemap = "streets-vector";
     loaded = false;
     directionsElement: any;
-    searchHistory: string[] = [];
+    searchHistory: { latitude: number; longitude: number }[] = [];
+    favorites: { longitude: number; latitude: number }[] = [];
     isHistoryVisible: boolean = false;
     isFavoritesVisible: boolean = false;
   
@@ -71,11 +72,6 @@ import {
 
     toggleFavorites() {
         this.isFavoritesVisible = !this.isFavoritesVisible;
-    }
-
-    onHistoryItemClick(term: string) {
-        console.log(`Clicked on: ${term}`);
-        // Perform additional actions, e.g., navigate or search with this term
     }
   
     async initializeMap() {
@@ -105,8 +101,6 @@ import {
   
         await this.view.when();
         console.log("ArcGIS map loaded");
-        //this.addRouting();
-        this.addSearchWidget();
         this.zoomOnPoint();
         return this.view;
       } catch (error) {
@@ -212,26 +206,6 @@ import {
         this.map.add(this.graphicsLayerRoutes);
     }
 
-    addSearchWidget() {      
-        const searchWidget = new Search({
-          view: this.view,
-          includeDefaultSources: true,
-        });
-      
-        searchWidget.on("search-complete", (event) => {
-            const searchTerm = event.searchTerm;
-
-            if (searchTerm && !this.searchHistory.includes(searchTerm)) {
-                this.searchHistory.unshift(searchTerm);
-                if (this.searchHistory.length > 5) {
-                    this.searchHistory.pop();
-                }
-            }
-        });
-      
-        this.view.ui.add(searchWidget, "top-right");
-    }
-
     zoomOnPoint() {
         const customPopup = document.getElementById("customPopup");
         const popupContent = document.getElementById("popupContent");
@@ -259,6 +233,7 @@ import {
                 if (response.results.length > 0) {
                     const graphic = (response.results[0] as any).graphic;
                     const { longitude, latitude } = graphic.geometry;
+                    this.addToSearchHistory({ latitude, longitude });
     
                     // Set the popup content to the coordinates
                     popupContent.innerHTML = `
@@ -274,7 +249,6 @@ import {
                         // Ensure the popup dimensions are available
                         customPopup.style.display = "block"; // Temporarily make it visible
                         const popupWidth = customPopup.offsetWidth; // Get the width
-                        const popupHeight = customPopup.offsetHeight; // Get the height
                         customPopup.style.display = "none"; // Hide it again
 
                         // Position the popup at the feature's location
@@ -289,8 +263,10 @@ import {
                             favoriteBtn.addEventListener('click', () => {
                                 favoriteBtn.classList.toggle('favorited'); // Toggle green color
                                 if (favoriteBtn.classList.contains('favorited')) {
+                                    this.addToFavorites({latitude, longitude});
                                     console.log("Added to favorites:", { longitude, latitude });
                                 } else {
+                                    this.removeFromFavorites({latitude, longitude});
                                     console.log("Removed from favorites:", { longitude, latitude });
                                 }
                             });
@@ -316,13 +292,46 @@ import {
             });
         });
     }
-    
-    // Add to favorite method
-    addToFavorite(graphic: any) {
-        console.log("Added to favorite:", graphic);
-        alert(`Feature with longitude ${graphic.geometry.longitude} and latitude ${graphic.geometry.latitude} added to favorites.`);
+
+    // Function to add coordinates to the search history
+    addToSearchHistory(coords: { latitude: number; longitude: number }): void {
+        // Check if the coordinates are already in the history
+        if (!this.searchHistory.some(item => item.longitude === coords.longitude && item.latitude === coords.latitude)) {
+            this.searchHistory.unshift(coords);
+            if (this.searchHistory.length > 5) {
+                this.searchHistory.pop(); // Keep only the last 5 entries
+            }
+        }
+        console.log("Search History:", this.searchHistory); // Log the history for debugging
     }
     
+    // Function to add coordinates to the search history
+    addToFavorites(coords: { latitude: number; longitude: number }): void {
+        // Check if the coordinates are already in the history
+        if (!this.favorites.some(item => item.longitude === coords.longitude && item.latitude === coords.latitude)) {
+            this.favorites.unshift(coords);
+            if (this.favorites.length > 5) {
+                this.favorites.pop(); // Keep only the last 5 entries
+            }
+        }
+        console.log("Search History:", this.favorites); // Log the history for debugging
+    }
+
+    // Function to remove a favorite by latitude and longitude
+    removeFromFavorites(coords: { longitude: number; latitude: number }): void {
+        const index = this.favorites.findIndex(
+            (item) => item.longitude === coords.longitude && item.latitude === coords.latitude
+        );
+
+        if (index !== -1) {
+            this.favorites.splice(index, 1); // Remove the favorite at the found index
+            console.log("Removed from favorites:", coords);
+        } else {
+            console.log("Coordinates not found in favorites:", coords);
+        }
+
+        console.log("Updated Favorites:", this.favorites); // Log the updated favorites for debugging
+    }
     
     searchByCurrentLocation(): Promise<{ pointGraphic: Graphic }> {
       return new Promise((resolve, reject) => {

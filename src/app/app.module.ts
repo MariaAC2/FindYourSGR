@@ -54,7 +54,8 @@ import { ScannerDialogComponent } from './pages/scanner-dialog/scanner-dialog.co
     AuthenticationComponent,
     AccountComponent,
     AddPointComponent,
-    ScannerDialogComponent
+    ScannerDialogComponent,
+    AddPointComponent
   ],
   imports: [
     BrowserModule,
