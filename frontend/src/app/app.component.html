@@ -10,9 +10,9 @@
 </div>
 
 <ng-template #defaultNavbar>
-    <div class="topnav">
+    <div *ngIf="shouldShowToolbar()" class="topnav">
         <!-- Logo and Title -->
-        <div><img src="../../assets/recycling.png" class="logo" /></div>
+        <div style = "padding: 4px 0 0 4px"><img src="../../assets/recycling.png" class="logo" /></div>
         <div class="text_logo">FindYourSGR</div>
       
         <!-- Menu Content -->

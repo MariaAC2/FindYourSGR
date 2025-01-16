@@ -41,6 +41,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AccountComponent } from './pages/account/account.component';
 import { AddPointComponent } from './pages/add-point/add-point.component';
+import { ScannerDialogComponent } from './pages/scanner-dialog/scanner-dialog.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,8 @@ import { AddPointComponent } from './pages/add-point/add-point.component';
     LoginComponent,
     AuthenticationComponent,
     AccountComponent,
+    AddPointComponent,
+    ScannerDialogComponent,
     AddPointComponent
   ],
   imports: [
