@@ -15,16 +15,16 @@
   
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-          <label for="username">Nume utilizator</label>
+          <label for="email">Email utilizator</label>
           <input 
-            id="username" 
-            type="text" 
-            formControlName="username" 
+            id="email" 
+            type="email" 
+            formControlName="email" 
             class="form-control" 
-            placeholder="Enter your username" 
+            placeholder="Enter your Email" 
           />
-          <div *ngIf="loginForm.get('username').invalid && loginForm.get('username').touched" class="error-message">
-            Numele de utilizator este obligatoriu (minim 6 caractere).
+          <div *ngIf="loginForm.get('email').invalid && loginForm.get('email').touched" class="error-message">
+            Email-ul este obligatoriu (minim 6 caractere).
           </div>
         </div>
   
