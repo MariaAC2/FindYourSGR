@@ -20,7 +20,7 @@ export class AppComponent {
     { name: 'Acasă', link: '/home' },
     { name: 'Hartă', link: '/map' },
     { name: "Adaugă un punct", link: '/map/add_point' },
-    { name: "Favorite", link: '/favorites' },
+    //{ name: "Favorite", link: '/favorites' },
     // { name: "Istoric căutări", link: '/history' },
     { name: "Contul meu", link: '/account' }
   ];
@@ -77,7 +77,13 @@ export class AppComponent {
   }
 
   isMainPage(): boolean {
-    const mainPages = ['/map', '/map/add_point', '/favorites', '/account'];
+    const mainPages = ['/map', '/map/add_point'];
     return mainPages.includes(this.activeTab);
   }
+
+  shouldShowToolbar(): boolean {
+    const noToolbarPages = ['/login', '/authenticate']; // Add routes where toolbar shouldn't appear
+    return !noToolbarPages.includes(this.activeTab);
+  }
+  
 }

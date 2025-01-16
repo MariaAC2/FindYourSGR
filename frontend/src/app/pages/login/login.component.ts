@@ -27,7 +27,7 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      this.http.post('http://localhost:1111/login', this.loginForm.value).subscribe(
+      this.http.post('http://localhost:5000/api/auth/login', this.loginForm.value).subscribe(
         (response: any) => {
           window.localStorage.setItem('token', response.data);
           this.snackBar.open('Login successful!', 'Close', { duration: 5000 });
