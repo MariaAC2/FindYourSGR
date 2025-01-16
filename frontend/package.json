@@ -30,6 +30,7 @@
     "firebase": "^9.23.0",
     "minimist": "^1.2.5",
     "parse5": "^7.2.1",
+    "parse5-html-rewriting-stream": "^7.0.0",
     "quagga": "^0.12.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
