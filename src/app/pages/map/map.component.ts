@@ -52,7 +52,8 @@ import {
     basemap = "streets-vector";
     loaded = false;
     directionsElement: any;
-    searchHistory: string[] = [];
+    searchHistory: { latitude: number; longitude: number }[] = [];
+    favorites: { longitude: number; latitude: number }[] = [];
     isHistoryVisible: boolean = false;
     isFavoritesVisible: boolean = false;
   
@@ -71,11 +72,6 @@ import {
 
     toggleFavorites() {
         this.isFavoritesVisible = !this.isFavoritesVisible;
-    }
-
-    onHistoryItemClick(term: string) {
-        console.log(`Clicked on: ${term}`);
-        // Perform additional actions, e.g., navigate or search with this term
     }
   
     async initializeMap() {
@@ -105,8 +101,6 @@ import {
   
         await this.view.when();
         console.log("ArcGIS map loaded");
-        this.addRouting();
-        this.addSearchWidget();
         this.zoomOnPoint();
         return this.view;
       } catch (error) {
@@ -212,31 +206,13 @@ import {
         this.map.add(this.graphicsLayerRoutes);
     }
 
-    addSearchWidget() {      
-        const searchWidget = new Search({
-          view: this.view,
-          includeDefaultSources: true,
-        });
-      
-        searchWidget.on("search-complete", (event) => {
-            const searchTerm = event.searchTerm;
-
-            if (searchTerm && !this.searchHistory.includes(searchTerm)) {
-                this.searchHistory.unshift(searchTerm);
-                if (this.searchHistory.length > 5) {
-                    this.searchHistory.pop();
-                }
-            }
-        });
-      
-        this.view.ui.add(searchWidget, "top-right");
-    }
-
     zoomOnPoint() {
         const customPopup = document.getElementById("customPopup");
         const popupContent = document.getElementById("popupContent");
         const closePopupBtn = document.getElementById("closePopupBtn");
         const favoriteBtn = document.getElementById("favoriteBtn");
+        const routeBtn = document.getElementById("routeBtn");
+        const routeUrl = "https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World";
     
         // Close the popup when the close button is clicked
         closePopupBtn.addEventListener("click", () => {
@@ -244,6 +220,7 @@ import {
         });
     
         this.view.on("double-click", (event) => {
+            this.removeRoutes();
             event.stopPropagation(); // Prevent default zoom behavior
     
             const screenPoint = {
@@ -256,6 +233,7 @@ import {
                 if (response.results.length > 0) {
                     const graphic = (response.results[0] as any).graphic;
                     const { longitude, latitude } = graphic.geometry;
+                    this.addToSearchHistory({ latitude, longitude });
     
                     // Set the popup content to the coordinates
                     popupContent.innerHTML = `
@@ -271,7 +249,6 @@ import {
                         // Ensure the popup dimensions are available
                         customPopup.style.display = "block"; // Temporarily make it visible
                         const popupWidth = customPopup.offsetWidth; // Get the width
-                        const popupHeight = customPopup.offsetHeight; // Get the height
                         customPopup.style.display = "none"; // Hide it again
 
                         // Position the popup at the feature's location
@@ -286,43 +263,153 @@ import {
                             favoriteBtn.addEventListener('click', () => {
                                 favoriteBtn.classList.toggle('favorited'); // Toggle green color
                                 if (favoriteBtn.classList.contains('favorited')) {
+                                    this.addToFavorites({latitude, longitude});
                                     console.log("Added to favorites:", { longitude, latitude });
                                 } else {
+                                    this.removeFromFavorites({latitude, longitude});
                                     console.log("Removed from favorites:", { longitude, latitude });
                                 }
                             });
+                        }
+
+                        if (routeBtn) {
+                          routeBtn.addEventListener('click', () => {
+                            this.searchByCurrentLocation()
+                                .then((coords) => {
+                                  customPopup.style.display = "none";
+                                  const { pointGraphic } = coords;
+                                  console.log('Point:', coords);
+                                  this.calculateRoute(routeUrl, pointGraphic, graphic);
+                                  
+                                })
+                                .catch((error) => {
+                                  console.error('Error:', error);
+                            });          
+                        });
                         }
                     }, 0);
                 }
             });
         });
     }
-    
-    // Add to favorite method
-    addToFavorite(graphic: any) {
-        console.log("Added to favorite:", graphic);
-        alert(`Feature with longitude ${graphic.geometry.longitude} and latitude ${graphic.geometry.latitude} added to favorites.`);
-    }
-  
-    addRouting() {
-      const routeUrl = "https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World";
-      this.view.on("click", (event) => {
-        this.view.hitTest(event).then((elem: esri.HitTestResult) => {
-          if (elem && elem.results && elem.results.length > 0) {
-            let point: esri.Point = elem.results.find(e => e.layer === this.trailheadsLayer)?.mapPoint;
-            if (point) {
-              console.log("get selected point: ", elem, point);
-              if (this.graphicsLayerUserPoints.graphics.length === 0) {
-                this.addPoint(point.latitude, point.longitude);
-              } else if (this.graphicsLayerUserPoints.graphics.length === 1) {
-                this.addPoint(point.latitude, point.longitude);
-                this.calculateRoute(routeUrl);
-              } else {
-                this.removePoints();
-              }
+
+    // Function to add coordinates to the search history
+    addToSearchHistory(coords: { latitude: number; longitude: number }): void {
+        // Check if the coordinates are already in the history
+        if (!this.searchHistory.some(item => item.longitude === coords.longitude && item.latitude === coords.latitude)) {
+            this.searchHistory.unshift(coords);
+            if (this.searchHistory.length > 5) {
+                this.searchHistory.pop(); // Keep only the last 5 entries
             }
+        }
+        console.log("Search History:", this.searchHistory); // Log the history for debugging
+    }
+    
+    // Function to add coordinates to the search history
+    addToFavorites(coords: { latitude: number; longitude: number }): void {
+        // Check if the coordinates are already in the history
+        if (!this.favorites.some(item => item.longitude === coords.longitude && item.latitude === coords.latitude)) {
+            this.favorites.unshift(coords);
+            if (this.favorites.length > 5) {
+                this.favorites.pop(); // Keep only the last 5 entries
+            }
+        }
+        console.log("Search History:", this.favorites); // Log the history for debugging
+    }
+
+    // Function to remove a favorite by latitude and longitude
+    removeFromFavorites(coords: { longitude: number; latitude: number }): void {
+        const index = this.favorites.findIndex(
+            (item) => item.longitude === coords.longitude && item.latitude === coords.latitude
+        );
+
+        if (index !== -1) {
+            this.favorites.splice(index, 1); // Remove the favorite at the found index
+            console.log("Removed from favorites:", coords);
+        } else {
+            console.log("Coordinates not found in favorites:", coords);
+        }
+
+        console.log("Updated Favorites:", this.favorites); // Log the updated favorites for debugging
+    }
+    
+    searchByCurrentLocation(): Promise<{ pointGraphic: Graphic }> {
+      return new Promise((resolve, reject) => {
+        if (!navigator.geolocation) {
+          alert('Geolocation is not supported by your browser.');
+          reject('Geolocation is not supported by your browser.');
+          return;
+        }
+    
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+    
+            const point = new Point({
+              longitude: longitude,
+              latitude: latitude,
+            });
+    
+            const searchWidget = new Search({
+              view: this.view, // Reference to your MapView
+              popupEnabled: false, // Disable default popup
+              resultGraphicEnabled: false, // Prevent default result graphic
+            });
+    
+            // Perform reverse geocoding
+            searchWidget.search(point).then((result) => {
+              if (result.results.length > 0) {
+                const firstResult = result.results[0];
+    
+                if (firstResult.results && firstResult.results[0].feature && firstResult.results[0].feature.geometry) {
+                  const geometry = firstResult.results[0].feature.geometry;
+    
+                  console.log('Search result geometry:', geometry);
+                  console.log('Search result (current location):', geometry);
+    
+                  // Create a custom symbol for the point
+                  const pointSymbol = {
+                    type: 'simple-marker', // Simple marker symbol
+                    color: [0, 255, 255, 0.8], // Blue with 80% opacity
+                    size: '20px',
+                    outline: {
+                      color: [255, 255, 255], // White outline
+                      width: 1,
+                    },
+                  };
+    
+                  const pointGraphic = new Graphic({
+                    geometry: geometry, // Geometry of the result
+                    symbol: pointSymbol, // Custom symbol
+                  });
+    
+                  // Clear previous graphics and add the new point
+                  this.graphicsLayer.removeAll();
+                  this.graphicsLayer.add(pointGraphic);
+    
+                  // Resolve the pointGraphic wrapped in an object
+                  resolve({ pointGraphic });
+                } else {
+                  console.error('No geometry found for the reverse geocoding result.');
+                  alert('Unable to determine a location for your current position.');
+                  reject('No geometry found for the reverse geocoding result.');
+                }
+              } else {
+                alert('No location found for your current position.');
+                reject('No location found for your current position.');
+              }
+            }).catch((err) => {
+              console.error('Error during reverse geocoding:', err);
+              alert('Error while trying to determine your current location.');
+              reject('Error during reverse geocoding.');
+            });
+          },
+          (error) => {
+            console.error('Geolocation error:', error.message);
+            alert('Failed to get your current location. Please enable location services.');
+            reject('Failed to get your current location.');
           }
-        });
+        );
       });
     }
   
@@ -357,10 +444,10 @@ import {
       this.graphicsLayerRoutes.removeAll();
     }
   
-    async calculateRoute(routeUrl: string) {
+    async calculateRoute(routeUrl: string, stop1: Graphic, stop2: Graphic) {
       const routeParams = new RouteParameters({
         stops: new FeatureSet({
-          features: this.graphicsLayerUserPoints.graphics.toArray()
+          features: [stop1,stop2]
         }),
         returnDirections: true
       });
@@ -378,7 +465,7 @@ import {
       for (const result of data.routeResults) {
         result.route.symbol = {
           type: "simple-line",
-          color: [5, 150, 255],
+          color: [79, 91, 102],
           width: 3
         };
         this.graphicsLayerRoutes.graphics.add(result.route);

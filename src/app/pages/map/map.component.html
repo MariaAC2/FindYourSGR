@@ -23,12 +23,20 @@
 <div class="search-history" [class.visible]="isHistoryVisible">
     <h3>Istoric căutări</h3>
     <ul>
-        <li *ngFor="let term of searchHistory" (click)="onHistoryItemClick(term)">
-            {{ term }}
+        <li *ngFor="let coords of searchHistory">
+            Longitude: {{ coords.longitude }}, Latitude: {{ coords.latitude }}
         </li>
     </ul>
 </div>
 
+<div class="search-history" [class.visible]="isFavoritesVisible">
+    <h3>Listă de favorite</h3>
+    <ul>
+        <li *ngFor="let coords of favorites">
+            Longitude: {{ coords.longitude }}, Latitude: {{ coords.latitude }}
+        </li>
+    </ul>
+</div>
 
 <div id="customPopup" class="custom-popup">
     <div class="popup-header">
@@ -39,7 +47,12 @@
         <p><strong>Longitude:</strong> <span id="longitudeValue"></span></p>
         <p><strong>Latitude:</strong> <span id="latitudeValue"></span></p>
     </div>
-    <div id="favoriteBtn" class="heart-shape"></div>
+    <div class="button-container">
+        <div id="favoriteBtn" class="heart-shape" data-btn="Adaugă la favorite"></div>
+        <div id="routeBtn" class="route-button" data-btn="Afișează ruta">
+            <img src="assets/Route Icon.png" alt="Route Icon" class="route-icon">
+        </div>
+    </div>
 </div>
 
 <!-- Floating Action Button (FAB) -->

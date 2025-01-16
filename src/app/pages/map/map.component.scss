@@ -82,7 +82,7 @@
 /* Tooltip styling */
 .toggle-btn::after {
     content: attr(data-btn); /* Use the data-tooltip attribute for text */
-    position: absolute;
+    position: relative;
     top: 40px; /* Position above the button */
     right: 0;
     background-color: #ddd; /* Dark background for the tooltip */
@@ -171,16 +171,24 @@
     margin-top: 10px;
 }
 
+.button-container {
+    display: flex; /* Use flexbox for layout */
+    justify-content: center; /* Center the buttons */
+    align-items: center; /* Align buttons vertically */
+    gap: 20px; /* Add space between the buttons */
+    margin-top: 10px; /* Add some space from the content above */
+}
+
 .heart-shape {
     background: #f9e1ea none repeat scroll 0 0;
     border-radius: 50%;
-    display: block;
     height: 50px;
     width: 50px;
-    margin: 10px auto 0;
-    text-align: center;
-    cursor: pointer; /* Make it clickable */
-    transition: background 0.3s ease, transform 0.2s ease; /* Smooth transition */
+    display: flex; /* Enable flexbox */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .heart-shape:before {
@@ -191,6 +199,26 @@
     top: 2px; /* Adjust position for the icon */
 }
 
+/* Tooltip styling */
+.heart-shape::after {
+    content: attr(data-btn); /* Use the data-tooltip attribute for text */
+    position: absolute;
+    top: 40px; /* Position above the button */
+    right: 0;
+    background-color: #ddd; /* Dark background for the tooltip */
+    color: #333;
+    padding: 5px 10px;
+    font-size: 12px; /* Smaller font size */
+    white-space: nowrap; /* Prevent wrapping */
+    opacity: 0; /* Initially hidden */
+    pointer-events: none; /* Prevent interaction */
+    transition: opacity 0.3s ease; /* Smooth appearance */
+}
+
+.heart-shape:hover::after {
+    opacity: 1; /* Show the tooltip on hover */
+}
+
 .heart-shape.favorited {
     background: #c8f1c1; /* Green background for favorited */
 }
@@ -199,4 +227,55 @@
     color: #34a853; /* Green heart for favorited */
 }
 
+// .route-button {
+//     background: #a7dfff none repeat scroll 0 0;
+//     border-radius: 50%;
+//     display: block;
+//     height: 50px;
+//     width: 50px;
+//     margin: 10px auto 0;
+//     text-align: center;
+//     cursor: pointer; /* Make it clickable */
+//     transition: background 0.3s ease, transform 0.2s ease; /* Smooth transition */
+//   }
 
+.route-button {
+    background: #a7dfff none repeat scroll 0 0;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    display: flex; /* Enable flexbox */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+  
+.route-button:hover {
+    background-color: #3c9aff;
+}
+
+/* Tooltip styling */
+.route-button::after {
+    content: attr(data-btn); /* Use the data-tooltip attribute for text */
+    position: absolute;
+    top: 40px; /* Position above the button */
+    right: 0;
+    background-color: #ddd; /* Dark background for the tooltip */
+    color: #333;
+    padding: 5px 10px;
+    font-size: 12px; /* Smaller font size */
+    white-space: nowrap; /* Prevent wrapping */
+    opacity: 0; /* Initially hidden */
+    pointer-events: none; /* Prevent interaction */
+    transition: opacity 0.3s ease; /* Smooth appearance */
+}
+
+.route-button:hover::after {
+    opacity: 1; /* Show the tooltip on hover */
+}
+
+.route-icon {
+    width: 30px; /* Larger icon size */
+    height: 30px; /* Larger icon size */
+}
