@@ -23,7 +23,9 @@
             <div class="menu-items">
               <a href="/map" class="menu-item">Harta</a>
               <a href="/login" class="menu-item">Logare</a>
-              <a href="/authenticate" class="menu-item">Autentificare</a>
+              <!-- <a href="/authenticate" class="menu-item">Autentificare</a> -->
+              <a *ngIf="!isLoggedIn" href="/authenticate" class="menu-item">Autentificare</a>
+              <a *ngIf="isLoggedIn" href="javascript:void(0);" class="menu-item" (click)="logout()">Logout</a>
             </div>
           </div>
     </div>

@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Account } from 'src/app/app.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,8 @@ export class LoginComponent {
     private fb: FormBuilder,
     private http: HttpClient,
     private snackBar: MatSnackBar,
-    public router: Router
+    public router: Router,
+    private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required]],
@@ -31,6 +34,7 @@ export class LoginComponent {
         (response: any) => {
           window.localStorage.setItem('token', response.data);
           this.snackBar.open('Login successful!', 'Close', { duration: 5000 });
+          this.authService.login(this.loginForm.value.email);
           this.router.navigate(['/account']);
         },
         (error) => {

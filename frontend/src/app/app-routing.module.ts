@@ -8,6 +8,7 @@ import { AccountComponent } from './pages/account/account.component';
 import { AuthenticationComponent } from "./pages/authentication/authentication.component";
 import { LoginComponent } from "./pages/login/login.component";
 import {ScannerDialogComponent} from "./pages/scanner-dialog/scanner-dialog.component";
+import { AuthGuard } from './guards/auth.guard';
  
 export const routes: Routes = [
   {
@@ -30,7 +31,8 @@ export const routes: Routes = [
     component: AuthenticationComponent
   },
   { path: 'account', 
-    component: AccountComponent 
+    component: AccountComponent,
+    canActivate: [AuthGuard]
   },
 
   {
