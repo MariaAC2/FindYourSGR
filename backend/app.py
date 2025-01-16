@@ -1,7 +1,10 @@
-from flask import Flask, session, render_template, request, redirect
+from flask import Flask, session, render_template, request, redirect, jsonify
 import pyrebase
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, origins=["http://localhost:4200"])
+
 
 config ={
     'apiKey': "AIzaSyBcbB4IhjxvFZ2O9g6jdoCK29FVMuLYMVw",
@@ -50,21 +53,46 @@ def home():
 
 
 
-@app.route('/register', methods=['GET', 'POST'])
+# @app.route('/register', methods=['GET', 'POST'])
+# def register():
+#     error = None
+#     if request.method == 'POST':
+#         data = request.get_json()
+#         email = data.get('email')
+#         password = data.get('password')
+#         print(f"got user with email {email} and password {password}")
+#         try:
+#             user = auth.create_user_with_email_and_password(email, password)
+#             session['user'] = email
+#             return jsonify({"message": "User registered successfully"}), 201
+#         except Exception as e:
+#             error = 'User already exists. Please try another email.'
+    
+#     return render_template('register.html', error=error)
+@app.route('/register', methods=['POST'])
 def register():
-    error = None
     if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
-        
         try:
+            data = request.get_json()  # Parse JSON from request
+            email = data.get('email')
+            password = data.get('password')
+            
+            # Debugging log
+            print(f"Received user with email {email} and password {password}")
+            
+            # Create the user in Firebase
             user = auth.create_user_with_email_and_password(email, password)
             session['user'] = email
-            return redirect('/')
+            
+            # Respond with a success message
+            return jsonify({"message": "User registered successfully!"}), 201
+        
         except Exception as e:
-            error = 'User already exists. Please try another email.'
-    
-    return render_template('register.html', error=error)
+            # Respond with an error message
+            error_message = str(e)
+            print(f"Error during registration: {error_message}")
+            return jsonify({"error": "User already exists or invalid details.", "details": error_message}), 400
+
 
 @app.route('/edit_point/<point_id>', methods=['GET', 'POST'])
 def edit_point(point_id):
