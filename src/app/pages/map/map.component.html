@@ -4,24 +4,24 @@
     <div #mapViewNode class="map-view"></div>
 </div>
 
-<button 
+<div 
     (click)="toggleHistory()" 
-    class="toggle-btn history-btn" 
+    class="toggle-btn search-btn" 
     [class.active]="isHistoryVisible"
-    data-btn="Vezi istoricul căutărilor">
+    data-btn="Vezi puncte adăugate">
     <img src="assets/History Icon.png" alt="History Icon" class="icon">
-</button>
+</div>
 
-<button 
+<div 
     (click)="toggleFavorites()" 
     class="toggle-btn favorites-btn" 
     [class.active]="isFavoritesVisible"
     data-btn="Vezi favorite">
     <img src="assets/Favorites Icon.png" alt="Favorites Icon" class="icon">
-</button>
+</div>
 
-<div class="search-history" [class.visible]="isHistoryVisible">
-    <h3>Istoric căutări</h3>
+<div class="results points-results" [class.visible]="isHistoryVisible">
+    <h3>Puncte adăugate</h3>
     <ul>
         <li *ngFor="let coords of searchHistory">
             Longitude: {{ coords.longitude }}, Latitude: {{ coords.latitude }}
@@ -29,7 +29,7 @@
     </ul>
 </div>
 
-<div class="search-history" [class.visible]="isFavoritesVisible">
+<div class="results favorites-results" [class.visible]="isFavoritesVisible">
     <h3>Listă de favorite</h3>
     <ul>
         <li *ngFor="let coords of favorites">
@@ -50,7 +50,7 @@
     <div class="button-container">
         <div id="favoriteBtn" class="heart-shape" data-btn="Adaugă la favorite"></div>
         <div id="routeBtn" class="route-button" data-btn="Afișează ruta">
-            <img src="assets/Route Icon.png" alt="Route Icon" class="route-icon">
+            <img src="assets/Route Icon.png" alt="Route Icon" class="icon">
         </div>
     </div>
 </div>
