@@ -11,7 +11,6 @@
   
     <div class="right-column">
       <h2 class="title-font">Înregistrare</h2>
-      <h6>Creează-ți cont</h6>
       
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form">
        
@@ -36,14 +35,6 @@
           <input id="email" type="email" formControlName="email" placeholder="Enter your email" />
           <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error">
             {{ registerForm.get('email')?.errors?.email ? 'Invalid email' : 'Email required' }}
-          </div>
-        </div>
-    
-        <div class="form-control">
-          <label for="username">Nume de utilizator</label>
-          <input id="username" type="text" formControlName="username" placeholder="Enter your username" />
-          <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="error">
-            {{ registerForm.get('username')?.errors?.minlength ? 'Minimum length is 6 characters' : 'Username required' }}
           </div>
         </div>
     

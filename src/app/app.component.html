@@ -10,33 +10,23 @@
 </div>
 
 <ng-template #defaultNavbar>
-    <!-- Navbar -->
-    <mat-toolbar class="custom-toolbar">
+    <div *ngIf="shouldShowToolbar()" class="topnav">
         <!-- Logo and Title -->
-        <div><img src="../../assets/recycling.png" alt="Logo" class="logo" /></div>
-        <div class="spacer-little"></div>
-        <div>FindYourSGR</div>
-        <!-- Spacer to push items to the right -->
-        <div class="spacer"></div>
-      
-        <!-- Menu Button with Navigation -->
-        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
-          <mat-icon>menu</mat-icon>
-        </button>
+        <div style = "padding: 4px 0 0 4px"><img src="../../assets/recycling.png" class="logo" /></div>
+        <div class="text_logo">FindYourSGR</div>
       
         <!-- Menu Content -->
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item [routerLink]="'/map'">
-            <div>Harta</div>
-          </button>
-          <button mat-menu-item [routerLink]="'/login'">
-            <div>Logare</div>
-          </button>
-          <button mat-menu-item [routerLink]="'/authenticate'">
-            <div>Autentificare</div>
-          </button>
-        </mat-menu>
-      </mat-toolbar>
+        <div class="custom-menu" style="position: relative;">
+            <button mat-icon-button aria-label="Menu">
+                <mat-icon>menu</mat-icon>
+              </button>
+            <div class="menu-items">
+              <a href="/map" class="menu-item">Harta</a>
+              <a href="/login" class="menu-item">Logare</a>
+              <a href="/authenticate" class="menu-item">Autentificare</a>
+            </div>
+          </div>
+    </div>
 </ng-template>
 
 <!-- Main content container -->

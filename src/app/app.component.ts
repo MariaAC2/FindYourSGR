@@ -37,6 +37,12 @@ export class AppComponent {
     });
   }
 
+  menuOpen = false;
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
+
     onTabClick(tab: ITab): void {
         this.activeTab = tab.link;
         console.log('Active tab: ' + this.activeTab);
@@ -61,7 +67,13 @@ export class AppComponent {
   }
 
   isMainPage(): boolean {
-    const mainPages = ['/map', '/map/add_point', '/favorites', '/history', '/account'];
+    const mainPages = ['/map', '/map/add_point', '/favorites', '/history'];
     return mainPages.includes(this.activeTab);
   }
+
+  shouldShowToolbar(): boolean {
+    const noToolbarPages = ['/login', '/authenticate']; // Add routes where toolbar shouldn't appear
+    return !noToolbarPages.includes(this.activeTab);
+  }
+  
 }
