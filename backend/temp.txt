@@ -1,7 +1,0 @@
-  apiKey: "AIzaSyBcbB4IhjxvFZ2O9g6jdoCK29FVMuLYMVw",
-  authDomain: "proiect-isi5.firebaseapp.com",
-  projectId: "proiect-isi5",
-  storageBucket: "proiect-isi5.firebasestorage.app",
-  messagingSenderId: "574178823412",
-  appId: "1:574178823412:web:62fc1ebfc9cba6905862a1",
-  measurementId: "G-0YFYTBZP4P"
