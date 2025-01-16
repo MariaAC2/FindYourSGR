@@ -1,4 +1,4 @@
-#!/home/alex/FindYourSGR/env/bin/python
+#!/home/alex/FindYourSGR/backend/env/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
