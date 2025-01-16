@@ -44,22 +44,38 @@
 }
 
 .icon {
-    width: 30px; /* Larger icon size */
-    height: 30px; /* Larger icon size */
-    display: block; /* Ensure it behaves like a block element */
-    margin: 0 auto; /* Center horizontally */
+    width: 24px; /* Icon width */
+    height: 24px; /* Icon height */
+    display: block; /* Ensure proper layout */
+    // margin: 0; /* Remove any default margin */
 }
 
+// .toggle-btn {
+//     position: fixed; /* Ensure buttons are fixed on the screen */
+//     width: 50px; /* Fixed width for uniform size */
+//     height: 50px; /* Fixed height for uniform size */
+//     display: flex; /* Use flexbox for centering content */
+//     justify-content: center; /* Center icon horizontally */
+//     align-items: center; /* Center icon vertically */
+//     background-color: white; /* White background for contrast */
+//     border: 2px solid #ccc; /* Light border */
+//     cursor: pointer; /* Pointer cursor for interactivity */
+//     transition: all 0.3s ease; /* Smooth hover transition */
+//     padding: 0; /* Remove padding */
+//     margin: 0; /* Remove margin */
+// }
 .toggle-btn {
     position: fixed; /* Ensure buttons are fixed on the screen */
-    padding: 5px 5px; /* Add padding for a larger clickable area */
-    background-color: white; /* White background for better contrast */
-    border: 2px solid #ccc; /* Light border for visibility */
+    width: 50px; /* Fixed width for uniform size */
+    height: 50px; /* Fixed height for uniform size */
+    display: flex; /* Use flexbox for centering content */
+    justify-content: center; /* Center icon horizontally */
+    align-items: center; /* Center icon vertically */
+    background-color: white; /* White background for contrast */
     cursor: pointer; /* Pointer cursor for interactivity */
-    transition: all 0.3s ease; /* Smooth hover and active transitions */
 }
 
-.history-btn {
+.search-btn {
     top: 120px; /* Adjust position from the top */
     right: 20px; /* Position to the right */
 }
@@ -80,14 +96,29 @@
 }
 
 /* Tooltip styling */
+// .toggle-btn::after {
+//     content: attr(data-btn); /* Use the data-tooltip attribute for text */
+//     position: relative;
+//     // top: 40px; /* Position above the button */
+//     // right: 0;
+//     // background-color: #ddd; /* Dark background for the tooltip */
+//     // color: #333;
+//     // padding: 5px 10px;
+//     // font-size: 12px; /* Smaller font size */
+//     // // white-space: nowrap; /* Prevent wrapping */
+//     // opacity: 0; /* Initially hidden */
+//     // pointer-events: none; /* Prevent interaction */
+//     // transition: opacity 0.3s ease; /* Smooth appearance */
+// }
+
 .toggle-btn::after {
-    content: attr(data-btn); /* Use the data-tooltip attribute for text */
-    position: relative;
-    top: 40px; /* Position above the button */
+    content: attr(data-btn); /* Tooltip text from data attribute */
+    position: absolute; /* Use absolute positioning */
+    bottom: -20px; /* Position below the button */
     right: 0;
     background-color: #ddd; /* Dark background for the tooltip */
-    color: #333;
-    padding: 5px 10px;
+    color: #333; /* Text color */
+    padding: 2px 4px; /* Padding around the text */
     font-size: 12px; /* Smaller font size */
     white-space: nowrap; /* Prevent wrapping */
     opacity: 0; /* Initially hidden */
@@ -99,10 +130,8 @@
     opacity: 1; /* Show the tooltip on hover */
 }
 
-.search-history {
+.results {
     position: fixed; /* Fixed on the viewport */
-    top: 150px; /* Position from the top */
-    right: 100px; /* Position from the left */
     width: 300px; /* Set menu width */
     background-color: #fff; /* Background color */
     border: 1px solid #ddd; /* Adds a border */
@@ -115,18 +144,27 @@
     max-height: 500px; /* Optional: Limit height for long lists */
 }
 
+.points-results {
+    top: 120px; /* Position from the top */
+    right: 100px; /* Position from the left */
+}
 
-.search-history.visible {
+.favorites-results {
+    top: 180px; /* Position from the top */
+    right: 100px; /* Position from the left */
+}
+
+.results.visible {
     display: block; /* Show the menu when the "visible" class is applied */
 }
 
-.search-history ul {
+.results ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-.search-history ul li {
+.results ul li {
     padding: 10px; /* Add padding for the content */
     margin: 5px 0; /* Add spacing between items */
     border: 1px solid #ddd; /* Add border on all sides */
@@ -136,7 +174,7 @@
     transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
 }
 
-.search-history ul li:hover {
+.results ul li:hover {
     background-color: #f1f1f1; /* Change background color on hover */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow effect on hover */
 }
@@ -180,6 +218,7 @@
 }
 
 .heart-shape {
+    position: relative;
     background: #f9e1ea none repeat scroll 0 0;
     border-radius: 50%;
     height: 50px;
@@ -199,22 +238,6 @@
     top: 2px; /* Adjust position for the icon */
 }
 
-/* Tooltip styling */
-.heart-shape::after {
-    content: attr(data-btn); /* Use the data-tooltip attribute for text */
-    position: absolute;
-    top: 40px; /* Position above the button */
-    right: 0;
-    background-color: #ddd; /* Dark background for the tooltip */
-    color: #333;
-    padding: 5px 10px;
-    font-size: 12px; /* Smaller font size */
-    white-space: nowrap; /* Prevent wrapping */
-    opacity: 0; /* Initially hidden */
-    pointer-events: none; /* Prevent interaction */
-    transition: opacity 0.3s ease; /* Smooth appearance */
-}
-
 .heart-shape:hover::after {
     opacity: 1; /* Show the tooltip on hover */
 }
@@ -227,19 +250,8 @@
     color: #34a853; /* Green heart for favorited */
 }
 
-// .route-button {
-//     background: #a7dfff none repeat scroll 0 0;
-//     border-radius: 50%;
-//     display: block;
-//     height: 50px;
-//     width: 50px;
-//     margin: 10px auto 0;
-//     text-align: center;
-//     cursor: pointer; /* Make it clickable */
-//     transition: background 0.3s ease, transform 0.2s ease; /* Smooth transition */
-//   }
-
 .route-button {
+    position: relative;
     background: #a7dfff none repeat scroll 0 0;
     border-radius: 50%;
     height: 50px;
@@ -255,15 +267,14 @@
     background-color: #3c9aff;
 }
 
-/* Tooltip styling */
-.route-button::after {
-    content: attr(data-btn); /* Use the data-tooltip attribute for text */
-    position: absolute;
-    top: 40px; /* Position above the button */
+.heart-shape::after, .route-button::after {
+    content: attr(data-btn); /* Tooltip text from data attribute */
+    position: absolute; /* Use absolute positioning */
+    bottom: -20px; /* Position below the button */
     right: 0;
     background-color: #ddd; /* Dark background for the tooltip */
-    color: #333;
-    padding: 5px 10px;
+    color: #333; /* Text color */
+    padding: 2px 4px; /* Padding around the text */
     font-size: 12px; /* Smaller font size */
     white-space: nowrap; /* Prevent wrapping */
     opacity: 0; /* Initially hidden */
@@ -271,11 +282,6 @@
     transition: opacity 0.3s ease; /* Smooth appearance */
 }
 
-.route-button:hover::after {
+.heart-shape:hover::after, .route-button:hover::after {
     opacity: 1; /* Show the tooltip on hover */
-}
-
-.route-icon {
-    width: 30px; /* Larger icon size */
-    height: 30px; /* Larger icon size */
 }

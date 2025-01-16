@@ -19,7 +19,11 @@ export class AddPoint1Component {
     }
 
     onNext(): void {
-        this.nextPage.emit();
+        if (!this.selectedServiceType) {
+            alert("Te rog selectează un tip de punct.");
+        } else {
+            this.nextPage.emit();
+        }
     }
 
     onServiceChange(event: Event): void {

@@ -3,8 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Account } from 'src/app/app.component';
-import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -18,11 +16,10 @@ export class LoginComponent {
     private fb: FormBuilder,
     private http: HttpClient,
     private snackBar: MatSnackBar,
-    public router: Router,
-    private authService: AuthService
+    public router: Router
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required]],
+      username: ['', [Validators.required, Validators.minLength(6)]],
       password: ['', [Validators.required, Validators.minLength(12)]],
       keepLoggedIn: [false]
     });
@@ -30,12 +27,11 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      this.http.post('http://localhost:1111/login', this.loginForm.value).subscribe(
+      this.http.post('http://localhost:5000/api/auth/login', this.loginForm.value).subscribe(
         (response: any) => {
           window.localStorage.setItem('token', response.data);
           this.snackBar.open('Login successful!', 'Close', { duration: 5000 });
-          this.authService.login(this.loginForm.value.email);
-          this.router.navigate(['/account']);
+          this.router.navigate(['/']);
         },
         (error) => {
           this.snackBar.open(error.error.message, 'Close', { duration: 5000 });

@@ -7,9 +7,7 @@ import { AddPoint2Component } from "./pages/add_point2/add_point2.component";
 import { AccountComponent } from './pages/account/account.component';
 import { AuthenticationComponent } from "./pages/authentication/authentication.component";
 import { LoginComponent } from "./pages/login/login.component";
-import {ScannerDialogComponent} from "./pages/scanner-dialog/scanner-dialog.component";
-import { AuthGuard } from './guards/auth.guard';
- 
+
 export const routes: Routes = [
   {
     path: 'home',
@@ -31,10 +29,8 @@ export const routes: Routes = [
     component: AuthenticationComponent
   },
   { path: 'account', 
-    component: AccountComponent,
-    canActivate: [AuthGuard]
+    component: AccountComponent 
   },
-
   {
     path: '',
     redirectTo: 'home',

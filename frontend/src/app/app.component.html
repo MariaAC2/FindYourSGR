@@ -10,9 +10,9 @@
 </div>
 
 <ng-template #defaultNavbar>
-    <div *ngIf="shouldShowToolbar()" class="topnav">
+    <div class="topnav">
         <!-- Logo and Title -->
-        <div style = "padding: 4px 0 0 4px"><img src="../../assets/recycling.png" class="logo" /></div>
+        <div><img src="../../assets/recycling.png" class="logo" /></div>
         <div class="text_logo">FindYourSGR</div>
       
         <!-- Menu Content -->
@@ -23,9 +23,7 @@
             <div class="menu-items">
               <a href="/map" class="menu-item">Harta</a>
               <a href="/login" class="menu-item">Logare</a>
-              <!-- <a href="/authenticate" class="menu-item">Autentificare</a> -->
-              <a *ngIf="!isLoggedIn" href="/authenticate" class="menu-item">Autentificare</a>
-              <a *ngIf="isLoggedIn" href="javascript:void(0);" class="menu-item" (click)="logout()">Logout</a>
+              <a href="/authenticate" class="menu-item">Autentificare</a>
             </div>
           </div>
     </div>
