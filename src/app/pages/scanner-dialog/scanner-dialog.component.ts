@@ -9,6 +9,8 @@ import Quagga from 'quagga';
 export class ScannerDialogComponent implements AfterViewInit, OnDestroy {
   @Output() scanComplete = new EventEmitter<string>();
 
+  isPopupActive: boolean = true; // Controls the visibility of the pop-up
+
   ngAfterViewInit(): void {
     this.initScanner();
   }
@@ -21,11 +23,11 @@ export class ScannerDialogComponent implements AfterViewInit, OnDestroy {
           type: 'LiveStream',
           target: document.querySelector('#scanner-container'),
           constraints: {
-            facingMode: 'environment' // Utilizează camera din spate
+            facingMode: 'environment' // Use the rear camera
           }
         },
         decoder: {
-          readers: ['code_128_reader', 'ean_reader', 'ean_8_reader', 'upc_reader'], // Formate suportate
+          readers: ['code_128_reader', 'ean_reader', 'ean_8_reader', 'upc_reader'], // Supported formats
         }
       },
       (err) => {
@@ -39,13 +41,14 @@ export class ScannerDialogComponent implements AfterViewInit, OnDestroy {
 
     Quagga.onDetected((data) => {
       console.log('Code detected:', data.codeResult.code);
-      this.scanComplete.emit(data.codeResult.code); // Transmite codul detectat
+      this.scanComplete.emit(data.codeResult.code); // Emit the detected code
       this.stopScanner();
     });
   }
 
   stopScanner(): void {
     Quagga.stop();
+    this.isPopupActive = false; // Close the pop-up
   }
 
   ngOnDestroy(): void {

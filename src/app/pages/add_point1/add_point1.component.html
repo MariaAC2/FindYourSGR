@@ -2,16 +2,17 @@
   <h2>Adaugă un punct pe hartă</h2>
   <p><strong>Pasul 1: Tip serviciu</strong></p>
 
-  <select id="serviceType" class="full-width font">
-    <option disabled selected>Selectează un tip de serviciu</option>
-    <option>Punct SGR</option>
-    <option>Coș de gunoi</option>
-  </select>
+    <select class="full-width font" [(ngModel)]="selectedServiceType" (change)="onServiceChange($event)">
+        <option disabled selected value="">Selectează un tip de serviciu</option>
+        <option *ngFor="let service of serviceTypes" [value]="service">
+            {{ service }}
+        </option>
+    </select>
 
-  <div class="button-group">
-    <button mat-raised-button color="primary" class="next-button font">Pasul următor</button>
-    <button mat-icon-button aria-label="Close" class="close-button" (click)="closeDialog()">
-      <mat-icon>close</mat-icon>
-    </button>
-  </div>
+    <div class="button-group">
+        <button mat-raised-button color="primary" class="next-button font" (click)="onNext()">Pasul următor</button>
+        <button mat-icon-button aria-label="Close" class="close-button" (click)="onClose()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
 </div>

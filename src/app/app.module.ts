@@ -40,6 +40,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AccountComponent } from './pages/account/account.component';
+import { AddPointComponent } from './pages/add-point/add-point.component';
 import { ScannerDialogComponent } from './pages/scanner-dialog/scanner-dialog.component';
 
 @NgModule({
@@ -52,6 +53,7 @@ import { ScannerDialogComponent } from './pages/scanner-dialog/scanner-dialog.co
     LoginComponent,
     AuthenticationComponent,
     AccountComponent,
+    AddPointComponent,
     ScannerDialogComponent
   ],
   imports: [

@@ -1,4 +1,4 @@
-<!-- account.component.html -->
+<!-- Updated account.component.html -->
 <div class="account-container">
   <div class="header">
     <div class="avatar">{{ userInitials }}</div>
@@ -9,9 +9,8 @@
     </div>
   </div>
 
-  <!-- <button class="scan-button" (click)="onScanReceipt()">Scaneaza bonul</button> -->
-  <app-scanner-dialog (scanComplete)="onCodeScanned($event)"></app-scanner-dialog>
-
+  <!-- Button to open the scanner dialog -->
+  <button class="scan-button" (click)="openScannerDialog()">Scanează bonul</button>
 
   <div class="points">
     <h4>Puncte acumulate</h4>

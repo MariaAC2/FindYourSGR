@@ -1,2 +1,12 @@
-<div id="scanner-container" style="width: 100%; height: 300px; position: relative;"></div>
-<button (click)="stopScanner()">Închide scannerul</button>
+<div class="scanner-popup" *ngIf="isPopupActive">
+  <div class="scanner-header">
+    <h2>Scan Your Code</h2>
+    <button class="close-button" (click)="stopScanner()">×</button>
+  </div>
+  <div class="scanner-body">
+    <div id="scanner-container" class="scanner-video"></div>
+    <p class="instructions">
+      Please align the barcode within the frame to scan it.
+    </p>
+  </div>
+</div>

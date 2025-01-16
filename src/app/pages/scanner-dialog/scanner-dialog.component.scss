@@ -1,5 +1,66 @@
+.scanner-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background: white;
+  border: 2px solid #4caf50;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.scanner-header {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.scanner-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.close-button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.scanner-body {
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* Prevent overflow */
+}
+
 #scanner-container {
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  overflow: hidden;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9; /* Maintain video aspect ratio */
+  max-height: 300px; /* Prevent the video from becoming too tall */
+  background-color: black;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden; /* Ensure content doesn't go outside the box */
+}
+
+.instructions {
+  margin-top: 15px;
+  color: #555;
+  font-size: 0.9rem;
+  text-align: center;
 }

@@ -22,7 +22,6 @@ export class AuthenticationComponent {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      username: ['', [Validators.required, Validators.minLength(6)]],
       password: ['', [Validators.required, Validators.minLength(12)]],
       confirmPassword: ['', [Validators.required]],
       terms: [false, [Validators.requiredTrue]],
