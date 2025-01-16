@@ -2,6 +2,9 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ScannerDialogComponent } from '../scanner-dialog/scanner-dialog.component';
+import { AuthGuard } from 'src/app/guards/auth.guard';
+import { AuthService } from 'src/app/services/auth.service';
+
 
 @Component({
   selector: 'app-account',
@@ -10,9 +13,8 @@ import { ScannerDialogComponent } from '../scanner-dialog/scanner-dialog.compone
 })
 export class AccountComponent {
   userData: any = {
-    name: 'John Doe',
-    email: 'johndoe@example.com',
-    memberSince: new Date('2022-01-01'),
+    email: String,
+    memberSince: new Date('2025-01-17'),
     points: 75,
     rewards: [
       { title: 'Reward 1', image: 'reward1.png' },
@@ -20,12 +22,19 @@ export class AccountComponent {
     ]
   };
 
-  userInitials: string = this.userData.name
+  // userInitials: string = this.userData.email
+  //   .split(' ')
+  //   .map((n: string) => n[0])
+  //   .join('');
+  userInitials: string;
+
+  constructor(private dialog: MatDialog, private authService: AuthService) {
+    this.userData.email = this.authService.getEmail();
+    this.userInitials = this.userData.email
     .split(' ')
     .map((n: string) => n[0])
     .join('');
-
-  constructor(private dialog: MatDialog) {}
+  }
 
   openScannerDialog(): void {
     const dialogRef = this.dialog.open(ScannerDialogComponent, {

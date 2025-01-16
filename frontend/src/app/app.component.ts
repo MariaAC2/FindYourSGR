@@ -3,10 +3,15 @@ import { Router, NavigationStart, NavigationEnd, NavigationError, NavigationCanc
 import { MatDialog } from '@angular/material/dialog';
 import { AddPoint1Component } from './pages/add_point1/add_point1.component';
 import { AddPoint2Component } from './pages/add_point2/add_point2.component';
+import { AuthGuard } from './guards/auth.guard';
+import { AuthService } from './services/auth.service';
 
 interface ITab {
   name: string;
   link: string;
+}
+export class Account {
+  email: ""
 }
 
 @Component({
@@ -15,6 +20,7 @@ interface ITab {
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  isLoggedIn: boolean = false;
 
   tabs: ITab[] = [
     { name: 'Acasă', link: '/home' },
@@ -27,7 +33,7 @@ export class AppComponent {
 
   activeTab = this.tabs[0].link;
 
-    constructor(private router: Router, private dialog: MatDialog) {
+    constructor(private router: Router, private dialog: MatDialog, private authService: AuthService) {
     // Subscribe to router events to detect route changes
         this.router.events.subscribe((event: Event) => {
             if (event instanceof NavigationEnd) {
@@ -85,5 +91,15 @@ export class AppComponent {
     const noToolbarPages = ['/login', '/authenticate']; // Add routes where toolbar shouldn't appear
     return !noToolbarPages.includes(this.activeTab);
   }
+  ngOnInit(): void {
+    // Monitor login state
+    this.isLoggedIn = this.authService.isLoggedIn();
+  }
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+    
+  }
+
   
 }
