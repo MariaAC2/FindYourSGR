@@ -136,21 +136,45 @@ def edit_point(point_id):
         return "Error editing point: " + str(e)
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
+# @app.route('/login', methods=['GET', 'POST'])
+# def login():
+#     error = None
+#     if request.method == 'POST':
+#         email = request.form.get('email')
+#         password = request.form.get('password')
         
-        try:
-            user = auth.sign_in_with_email_and_password(email, password)
-            session['user'] = email
-            return redirect('/')
-        except:
-            error = 'Incorrect email or password. Please try again.'
+#         try:
+#             user = auth.sign_in_with_email_and_password(email, password)
+#             session['user'] = email
+#             return redirect('/')
+#         except:
+#             error = 'Incorrect email or password. Please try again.'
     
-    return render_template('login.html', error=error)
+#     return render_template('login.html', error=error)
+@app.route('/login', methods=['POST'])
+def login():
+    try:
+        # Parse JSON data from the request body
+        data = request.get_json()
+        email = data.get('email')
+        password = data.get('password')
+
+        # Debugging log to ensure data is received
+        print(f"Attempting login with email: {email}")
+
+        # Attempt to authenticate the user with Firebase
+        user = auth.sign_in_with_email_and_password(email, password)
+        session['user'] = email
+
+        # Send a success response
+        return jsonify({"message": "Login successful!", "email": email}), 200
+
+    except Exception as e:
+        # Handle login errors and return a JSON response
+        error_message = str(e)
+        print(f"Login error: {error_message}")
+        return jsonify({"error": "Invalid email or password.", "details": error_message}), 401
+
 
 @app.route('/logout')
 def logout():
