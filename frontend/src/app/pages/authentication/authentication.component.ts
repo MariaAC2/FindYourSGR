@@ -114,8 +114,6 @@ export class AuthenticationComponent {
     private snackBar: MatSnackBar
   ) {
     this.registerForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(12)]],
       confirmPassword: ['', [Validators.required]],
