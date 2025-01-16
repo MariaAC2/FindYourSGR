@@ -68,10 +68,16 @@ import {
 
     toggleHistory() {
         this.isHistoryVisible = !this.isHistoryVisible;
+        if (this.isHistoryVisible) {
+            this.isFavoritesVisible = false;
+        }
     }
 
     toggleFavorites() {
         this.isFavoritesVisible = !this.isFavoritesVisible;
+        if (this.isFavoritesVisible) {
+            this.isHistoryVisible = false;
+        }
     }
   
     async initializeMap() {
@@ -412,9 +418,6 @@ import {
         );
       });
     }
-    
-
-    
   
     addPoint(lat: number, lng: number) {
       let point = new Point({
@@ -473,11 +476,6 @@ import {
         };
         this.graphicsLayerRoutes.graphics.add(result.route);
       }
-      // if (data.routeResults.length > 0) {
-      //   this.showDirections(data.routeResults[0].directions.features);
-      // } else {
-      //   alert("No directions found");
-      // }
     }
   
     clearRouter() {

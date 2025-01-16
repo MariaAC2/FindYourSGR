@@ -1,32 +1,10 @@
-<!-- Updated account.component.html -->
 <div class="account-container">
-  <div class="header">
-    <div class="avatar">{{ userInitials }}</div>
-    <div class="user-details">
-      <p>{{ userData?.email }}</p>
-      <p>Membru din {{ userData?.memberSince | date: 'd MMMM y' }}</p>
+    <h1>Contul meu</h1>
+    <div class="account-details">
+      <p><strong>Nume:</strong> {{ account.name }}</p>
+      <p><strong>Nume utilizator:</strong> {{ account.username }}</p>
+      <p><strong>Email:</strong> {{ account.email }}</p>
+      <p><strong>Parola:</strong> {{ account.password }}</p>
     </div>
   </div>
-
-  <!-- Button to open the scanner dialog -->
-  <button class="scan-button" (click)="openScannerDialog()">Scanează bonul</button>
-
-  <div class="points">
-    <h4>Puncte acumulate</h4>
-    <div class="progress-bar">
-      <div
-        class="progress"
-        [style.width.%]="userData?.points || 0"
-      ></div>
-    </div>
-    <p>{{ userData?.points || 0 }} puncte</p>
-  </div>
-
-  <div class="rewards">
-    <h4>Premiile tale</h4>
-    <div class="reward" *ngFor="let reward of userData?.rewards">
-      <img [src]="reward.image" alt="{{ reward.title }}" />
-      <p>{{ reward.title }}</p>
-    </div>
-  </div>
-</div>
+  
