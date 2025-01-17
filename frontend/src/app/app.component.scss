@@ -1,3 +1,8 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 .title {
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
@@ -13,6 +18,7 @@
     z-index: 1000; /* Ensure it's above other content */
 }
 
+  
 .topnav {
     display: flex;
     justify-content: right;
@@ -21,6 +27,7 @@
     padding: 4px 0;
     border-bottom: 1px solid #ddd;
 }
+  
   
 .topnav a {
     text-decoration: none; /* Removes underline from links */
