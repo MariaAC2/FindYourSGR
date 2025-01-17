@@ -29,6 +29,7 @@ import Point from "@arcgis/core/geometry/Point";
 
 export class AddPoint2Component implements OnInit{
     @Output() mapLoadedEvent = new EventEmitter<boolean>();
+    @Output() locationSaved = new EventEmitter<any>();
 
     @ViewChild("mapViewPopup", { static: false }) private mapViewEl: ElementRef;
     isMapVisible: boolean = false;
@@ -93,6 +94,9 @@ export class AddPoint2Component implements OnInit{
     
         // Close the dialog with the prepared data
         this.dialogRef.close(saveData);
+
+        const locationData = { currentLocation, searchLocation };     
+        // this.locationSaved.emit(currentLocation);
     }
     
 

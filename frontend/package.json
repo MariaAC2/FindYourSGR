@@ -27,6 +27,7 @@
         "esri-loader": "^3.3.0",
         "firebase": "^9.23.0",
         "minimist": "^1.2.5",
+        "quagga": "^0.12.1",
         "rxjs": "~7.5.0",
         "tslib": "^2.3.0",
         "webpack": "^5.97.1",

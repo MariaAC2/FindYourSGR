@@ -25,24 +25,20 @@ app.secret_key = 'secret_mare'
 
 
 class SGRPoint:
-    def __init__(self, point_id, title, description, size_of_queue, working, coordinate_x, coordinate_y):
+    def __init__(self, point_id, type, address, latitude, longitude):
         self.id = point_id
-        self.title = title
-        self.description = description
-        self.size_of_queue = size_of_queue
-        self.working = working
-        self.coordinate_x = coordinate_x
-        self.coordinate_y = coordinate_y
+        self.type = type
+        self.address = address
+        self.latitude = latitude
+        self.longitude = longitude
 
     def to_dict(self):
         return {
             "id": self.id,
-            "title": self.title,
-            "description": self.description,
-            "size_of_queue": self.size_of_queue,
-            "working": self.working,
-            "coordinate_x": self.coordinate_x,
-            "coordinate_y": self.coordinate_y,
+            "title": self.type,
+            "description": self.address,
+            "latitude": self.latitude,
+            "longitude": self.longitude,
         }
 
 @app.route('/')
@@ -113,8 +109,8 @@ def edit_point(point_id):
             updated_description = request.form.get('description')
             updated_size_of_queue = int(request.form.get('size_of_queue'))
             updated_working = request.form.get('working')
-            updated_coordinate_x = float(request.form.get('coordinate_x'))
-            updated_coordinate_y = float(request.form.get('coordinate_y'))
+            updated_latitude = float(request.form.get('latitude'))
+            updated_longitude = float(request.form.get('longitude'))
 
             updated_point = {
                 "id": point_id,
@@ -122,8 +118,8 @@ def edit_point(point_id):
                 "description": updated_description,
                 "size_of_queue": updated_size_of_queue,
                 "working": updated_working,
-                "coordinate_x": updated_coordinate_x,
-                "coordinate_y": updated_coordinate_y
+                "latitude": updated_latitude,
+                "longitude": updated_longitude
             }
 
             db.child("SGRPoints").child(key).update(updated_point)
@@ -181,38 +177,89 @@ def logout():
     session.pop('user')
     return redirect('/')
 
+# @app.route('/add_point', methods=['GET', 'POST'])
+# def add_point():
+#     error = None
+#     if 'user' not in session:
+#         return redirect('/login')
+    
+#     if request.method == 'POST':
+#         try:
+#             point_id = request.form.get('id')
+#             title = request.form.get('title')
+#             description = request.form.get('description')
+#             size_of_queue = int(request.form.get('size_of_queue'))
+#             working = request.form.get('working')
+#             latitude = float(request.form.get('latitude'))
+#             longitude = float(request.form.get('longitude'))
+            
+#             sgr_point = SGRPoint(
+#                 point_id=point_id,
+#                 title=title,
+#                 description=description,
+#                 size_of_queue=size_of_queue,
+#                 working=working,
+#                 latitude=latitude,
+#                 longitude=longitude
+#             )
+#             # Save to Firebase
+#             db.child("SGRPoints").push(sgr_point.to_dict())
+#             return "Point added successfully!"
+#         except Exception as e:
+#             error = "Failed to add point: " + str(e)
+    
+#     return render_template('add_point.html', error=error)
+
 @app.route('/add_point', methods=['GET', 'POST'])
+
 def add_point():
+
     error = None
     if 'user' not in session:
         return redirect('/login')
-    
+ 
     if request.method == 'POST':
         try:
-            point_id = request.form.get('id')
-            title = request.form.get('title')
-            description = request.form.get('description')
-            size_of_queue = int(request.form.get('size_of_queue'))
-            working = request.form.get('working')
-            coordinate_x = float(request.form.get('coordinate_x'))
-            coordinate_y = float(request.form.get('coordinate_y'))
-            
+            # Fetch the existing points to determine the next ID
+            points = db.child("SGRPoints").get().val()
+            if points:
+                # Extract all IDs and find the maximum
+                max_id = max(int(point['point_id']) for point in points.values())
+            else:
+                max_id = 0
+ 
+            # Increment the ID
+            point_id = max_id + 1
+            data = request.get_json()
+            # Get other form data
+            type = data.get('type')
+            address = data.get('address')
+            latitude = float(data.get('latitude'))
+            longitude = float(data.get('longitude'))
+ 
+            # Create the SGRPoint instance
+
             sgr_point = SGRPoint(
                 point_id=point_id,
-                title=title,
-                description=description,
-                size_of_queue=size_of_queue,
-                working=working,
-                coordinate_x=coordinate_x,
-                coordinate_y=coordinate_y
+                type=type,
+                address=address,
+                latitude=latitude,
+                longitude=longitude
+
             )
+ 
             # Save to Firebase
+
             db.child("SGRPoints").push(sgr_point.to_dict())
+
             return "Point added successfully!"
+
         except Exception as e:
+
             error = "Failed to add point: " + str(e)
-    
+ 
     return render_template('add_point.html', error=error)
+ 
 
 @app.route('/view_points')
 def view_points():

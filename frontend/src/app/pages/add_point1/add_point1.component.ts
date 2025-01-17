@@ -7,7 +7,7 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./add_point1.component.scss'],
 })
 export class AddPoint1Component {
-    @Output() nextPage = new EventEmitter<void>();
+    @Output() nextPage = new EventEmitter<string>();
     serviceTypes: string[] = ['Punct SGR', 'Coș de gunoi'];
     selectedServiceType: string | null = null; // Holds the selected value
 
@@ -19,10 +19,12 @@ export class AddPoint1Component {
     }
 
     onNext(): void {
+        
         if (!this.selectedServiceType) {
             alert("Te rog selectează un tip de punct.");
         } else {
             this.nextPage.emit();
+
         }
     }
 
