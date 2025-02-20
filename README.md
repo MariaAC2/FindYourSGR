@@ -1,4 +1,5 @@
 # angular-cli-esri-map
+The project is in the frontend-backend branch.
 Based on angular-cli-esri-map
 
 ## Licensing
