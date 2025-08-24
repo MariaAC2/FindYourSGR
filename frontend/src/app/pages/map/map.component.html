@@ -1,0 +1,59 @@
+<!-- Main container to hold the map and sidebar -->
+<div class="container">
+    <!-- The DIV that will contain the map -->
+    <div #mapViewNode class="map-view"></div>
+</div>
+
+<div 
+    (click)="toggleHistory()" 
+    class="toggle-btn search-btn" 
+    [class.active]="isHistoryVisible"
+    data-btn="Vezi puncte adăugate">
+    <img src="assets/History Icon.png" alt="History Icon" class="icon">
+</div>
+
+<div 
+    (click)="toggleFavorites()" 
+    class="toggle-btn favorites-btn" 
+    [class.active]="isFavoritesVisible"
+    data-btn="Vezi favorite">
+    <img src="assets/Favorites Icon.png" alt="Favorites Icon" class="icon">
+</div>
+
+<div class="results points-results" [class.visible]="isHistoryVisible">
+    <h3>Puncte adăugate</h3>
+    <ul>
+        <li *ngFor="let coords of searchHistory">
+            Longitude: {{ coords.longitude }}, Latitude: {{ coords.latitude }}
+        </li>
+    </ul>
+</div>
+
+<div class="results favorites-results" [class.visible]="isFavoritesVisible">
+    <h3>Listă de favorite</h3>
+    <ul>
+        <li *ngFor="let coords of favorites">
+            Longitude: {{ coords.longitude }}, Latitude: {{ coords.latitude }}
+        </li>
+    </ul>
+</div>
+
+<div id="customPopup" class="custom-popup">
+    <div class="popup-header">
+        <p id="popupTitle">Coordinates:</p>
+        <button id="closePopupBtn" class="popup-close-btn">&times;</button>
+    </div>
+    <div id="popupContent" class="popup-content">
+        <p><strong>Longitude:</strong> <span id="longitudeValue"></span></p>
+        <p><strong>Latitude:</strong> <span id="latitudeValue"></span></p>
+    </div>
+    <div class="button-container">
+        <div id="favoriteBtn" class="heart-shape" data-btn="Adaugă la favorite"></div>
+        <div id="routeBtn" class="route-button" data-btn="Afișează ruta">
+            <img src="assets/Route Icon.png" alt="Route Icon" class="icon">
+        </div>
+    </div>
+</div>
+
+<!-- Floating Action Button (FAB) -->
+<!-- <button class="fab" (click)="clearRouter()">x</button> -->

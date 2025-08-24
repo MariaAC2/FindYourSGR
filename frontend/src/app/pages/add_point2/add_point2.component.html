@@ -1,0 +1,45 @@
+<div class="popup-container">
+    <h2>Adaugă un punct pe hartă</h2>
+    <p><strong>Pasul 2: Adresa serviciului </strong></p>
+
+    <div *ngIf="isMapVisible" #mapViewPopup class="map-view-popup"></div>
+    <button mat-raised-button color="primary" class="save-button font" (click)="openMap()">Deschide harta</button>
+   
+    <!-- <label for="serviceAddress">Adresa exactă</label>
+    <input id="user-input" matInput class="full-width font"
+    [(ngModel)]="inputValue" placeholder="Introdu adresa exactă" (click)="onSearchClick()"> -->
+
+    <div style="display: flex; align-items: center; margin-top: 8px;">
+        <input
+            id="user-input"
+            matInput
+            class="full-width font"
+            [(ngModel)]="inputValue"
+            placeholder="Introdu adresa exactă"
+            (click)="onStartSearch()"
+            style="flex: 1; margin-right: 8px;"
+        >
+        <button
+            mat-raised-button
+            color="primary"
+            (click)="onSearchClick()"
+            style="padding: 5px 10px; min-width: 40px;"
+            title="Caută"
+        >
+        </button>
+    </div>
+
+    <label for="serviceAddress">sau</label>
+
+    <button id="current-location-button" mat-raised-button color="primary" class="save-button font" 
+    (click)="onCurrentLocationClick()">Permite folosirea locației curente</button>
+  
+    <div class="button-group">
+    <!-- <button mat-raised-button color="primary" class="next-button font" (click)="onPrevious()">Înapoi</button> -->
+
+        <button mat-raised-button color="primary" class="save-button font" (click)="onSave()">Salvează</button>
+        <button mat-icon-button class="close-button" aria-label="Close" (click)="onClose()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>

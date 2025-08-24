@@ -1,0 +1,118 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+.auth-container {
+  display: flex;
+  width: 100%;
+  height: 100vh; /* Utilizează 100vh pentru a ocupa înălțimea completă a ferestrei */
+  overflow: hidden;
+}
+
+h2, h6 {
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+input[type="text"], input[type="password"], input[type="email"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+button.submit-button {
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button.submit-button:disabled {
+  background-color: #5ca6f4c2;
+  cursor: not-allowed;
+}
+
+.signup-message {
+  font-size: 0.875rem;
+  margin-top: 15px;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.signup-message:hover {
+  text-decoration: underline;
+}
+
+.left-column {
+  flex: 1;
+  background-color: rgba(57, 174, 112, 1);
+  background-position: center;
+  background-size: cover;
+  padding: 60px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.left-column h2, .left-column p {
+  margin: 0; /* Elimină marginile */
+  padding: 0; /* Elimină padding-ul */
+}
+
+.left-column h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.left-column p {
+  font-size: 1.5rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.right-column {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  overflow: hidden;
+}

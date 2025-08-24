@@ -1,15 +1,14 @@
-# angular-cli-esri-map
-The project is in the frontend_backend branch.
-Based on angular-cli-esri-map
+# FindYourSGR
 
-## Licensing
+FindYourSGR is an Angular application that demonstrates how to combine the [ArcGIS API for JavaScript](https://developers.arcgis.com/javascript/) with Firebase. The app displays an interactive map, tracks the user's location, enables user to search SGR point by location and add it to favorites.
 
-Copyright 2020 Esri
+---
+## Features
+- ArcGIS map with bookmarks, search and routing
+- Realtime synchronization of map points and user position via Firebase Realtime Database
+- User login and authentication using Python Flask
+- Built with Angular CLI, Angular Material and other Angular libraries
 
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
-
-[http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
-
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-
-A copy of the license is available in the repository's license.txt file.
+---
+## License
+Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for the full text.

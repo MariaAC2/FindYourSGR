@@ -1,0 +1,59 @@
+.popup-container {
+    position: fixed;
+    width: 300px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 1000;
+}
+
+.map-view-popup {
+    width: 300px;
+    height: 200px; /* Ensure the container has a height */
+    visibility: visible;
+}
+  
+.full-width {
+    width: 100%;
+}
+  
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+}
+
+.close-button {
+    position: fixed;
+    top: 8px;
+    right: 8px;
+    font-size: 20px;
+}
+
+.save-button {
+    margin-top: 16px;
+}
+
+.font {
+    font-family: "Avenir Next", Avenir, "Helvetica Neue", sans-serif;
+}
+  
+h2 {
+    font-size: 20px;
+}
+  
+label {
+    font-size: 14px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+button {
+    cursor: pointer;
+}

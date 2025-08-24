@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+
+// @import "~bootstrap/dist/css/bootstrap.min.css";
+
+@import "~@arcgis/core/assets/esri/css/main.css";
+
+.text_logo {
+    font-family: Verdana, sans-serif;
+    flex-grow: 1; 
+    display: flex; 
+    align-items: center;
+    justify-content: left;
+}
+
+.logo {
+    height: 35px; 
+    width: auto; 
+    max-height: 100%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: left;
+}
