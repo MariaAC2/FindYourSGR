@@ -1,0 +1,192 @@
+[33mcommit b2a7570ba187ea13b0ba848793bc3f19e5639b40[m[33m ([m[1;36mHEAD -> [m[1;32mmaria_work[m[33m, [m[1;31morigin/maria_work[m[33m)[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Fri Jan 17 00:07:19 2025 +0200
+
+    Edited buttons/add points
+
+[33mcommit 371caae162aae9acfbc7d40a178bc0b3f191232b[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Thu Jan 16 19:05:05 2025 +0200
+
+    Added last version
+
+[33mcommit 350a6d2e813be288f7b1c76c017157a72354e7e5[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Thu Jan 16 13:21:57 2025 +0200
+
+    Version without backend
+
+[33mcommit 0d9486c1652ebf31108a622f41e41afcc2a6fcd6[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Thu Jan 16 13:13:50 2025 +0200
+
+    Last commit
+
+[33mcommit 79240f56b155d65b0200a8f3a8e0ea114eb4ec36[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Thu Jan 16 00:31:00 2025 +0200
+
+    Added backend folder from frontend_backend branch
+
+[33mcommit eb76cbbcd9cdb8f80bc0b66d355d9d7498685c13[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Wed Jan 15 23:00:01 2025 +0200
+
+    Added history and favorites button
+
+[33mcommit 51ab94b4517f6c05f0b4d086256426ea8f5391d6[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Wed Jan 15 19:24:09 2025 +0200
+
+    Added a lot of changes
+
+[33mcommit 78aab5e0b4f4f8843ab0e7e6154c9f4e7bdea55c[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Wed Jan 15 03:04:24 2025 +0200
+
+    Added add_point2 correct functionality and added csv layers with logo (Lidl Kaufland Carrefour)
+
+[33mcommit 086af64a3872237c68c55a3fcb2d18b728abf41c[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Tue Jan 14 23:33:46 2025 +0200
+
+    Now the add point totally works
+
+[33mcommit 3e577d497ccdbe8f0c24c5e3be2aefb9a2500608[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Mon Jan 13 20:24:59 2025 +0200
+
+    Solved add point error
+
+[33mcommit d79f355ce84c5fffcab14d2392b1837d0989962c[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Mon Jan 13 20:05:57 2025 +0200
+
+    Modified navigation bar to appear dynamically
+
+[33mcommit 2aab5929bb8103289fe98b17f7a85261edbc7ece[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Thu Jan 9 14:51:36 2025 +0200
+
+    Fixed home nav bar bug
+
+[33mcommit 20f0507dde738f90640b0ab7eb31b8731e30ed97[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Thu Jan 9 11:22:08 2025 +0200
+
+    Added logo in navigation bar
+
+[33mcommit f67d1f1b67d1fe62e7080736a0a583b75faff9bf[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Wed Dec 18 15:35:25 2024 +0200
+
+    Added csv layer for csv file PuncteSGRLidl
+
+[33mcommit 4bb19851e9f87a6fb6d1bcb4dd468b73603c278d[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Wed Dec 18 13:55:41 2024 +0200
+
+    Account info page added
+
+[33mcommit 81980963b4657b89248807142279b57803b13db2[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Tue Dec 17 23:25:52 2024 +0200
+
+    Add point form + map + navbar
+
+[33mcommit d48f5c24cd7bd035f41a53137987077982282884[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Tue Dec 17 21:24:21 2024 +0200
+
+    Added page two of add point popup (it shows the map, not complete aesthetically)
+
+[33mcommit b8f88c3f59d534cb410f09d21170e30be2d5f222[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Tue Dec 17 20:44:02 2024 +0200
+
+    Added page 2 for add point (the map doesn't work)
+
+[33mcommit ad693d2b18e789aea2741c2e69c37195176b7611[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Tue Dec 17 20:43:42 2024 +0200
+
+    Added page 2 for add point (the map doesn't work)
+
+[33mcommit ccfb474219bf41bd3f1bfc41a423149b84ab29f1[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Tue Dec 17 18:30:32 2024 +0200
+
+    Added second add point popup (it doesn't have dialogue or mini map)
+
+[33mcommit c89f864f1f999edf149c089418401dd41e19c9ae[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Tue Dec 17 17:58:46 2024 +0200
+
+    Created second add point pop up (not working)
+
+[33mcommit 4c04ee859952c17a78b8dd8010edfedef55466af[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Mon Dec 16 17:50:38 2024 +0200
+
+    Added pop up to add button (working but not aesthetic)
+
+[33mcommit e9cec74fe9dbcef9121987b10d6a25832053b899[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Mon Dec 16 17:22:55 2024 +0200
+
+    Added pop up for adding a point (not working)
+
+[33mcommit 70201ecd3c94c2bf235bb86bd14e29890098eaaf[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Mon Dec 16 16:17:53 2024 +0200
+
+    Added nav bar for map page
+
+[33mcommit 5523dcc52658c3ff7d3df9a8b2a85103b94a585b[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Sat Dec 14 20:32:21 2024 +0200
+
+    Added lab into project
+
+[33mcommit 5f041d1e4931e59368bcd659310d58bf978a05ad[m[33m ([m[1;32mmain[m[33m)[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Thu Dec 12 14:47:47 2024 +0200
+
+    Modified app.module to include Firebase
+
+[33mcommit 81c741a90210f98b6f22781ea5e5097921dd922c[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Thu Dec 12 14:34:59 2024 +0200
+
+    Added firebase services module
+
+[33mcommit 5cd5faadb0e707c7c390aa58ba12ecb1ec59ef1a[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Thu Dec 12 14:26:39 2024 +0200
+
+    Added environment data
+
+[33mcommit 27197e2df428f8d61c6148a04513b1467252b200[m
+Merge: 8a74af4f b07c3c3e
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Thu Dec 12 13:45:09 2024 +0200
+
+    Am comis-o
+
+[33mcommit b07c3c3ea5762ba4994bd1d19c3f1ecad20cc467[m
+Author: Maria Chirnogeanu <94364532+MariaAC2@users.noreply.github.com>
+Date:   Thu Dec 12 13:24:08 2024 +0200
+
+    Initial commit
+
+[33mcommit 8a74af4f30d9fbcedc445f605480935ed23079dd[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Thu Dec 12 13:16:33 2024 +0200
+
+    Added Angular Template
+
+[33mcommit fb99bd7de2e64126dc81d40200f2f3d12fea2097[m
+Author: Maria Chirnogeanu <maria.chirnogeanu@stud.acs.upb.ro>
+Date:   Thu Dec 12 13:03:46 2024 +0200
+
+    initial commit
