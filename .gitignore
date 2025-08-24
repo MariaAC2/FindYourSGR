@@ -8,3 +8,10 @@ backend/env
 dist/
 coverage/
 node_modules/
+
+# Angular cache & artifacts
+.angular/
+**/.angular/
+dist/
+coverage/
+node_modules/
